@@ -10,20 +10,19 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.context;
 
 public final class ContextException
-    extends Exception
-{
+  extends Exception {
+
     private static final long serialVersionUID = 1L;
 
-    public ContextException( final String message )
-    {
-        super( message );
+    public ContextException(final String message) {
+        super(message);
     }
 
-    public ContextException( final String message, final Throwable detail )
-    {
-        super( message, detail );
+    public ContextException(final String message, final Throwable detail) {
+        super(message, detail);
     }
 }

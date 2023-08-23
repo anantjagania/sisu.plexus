@@ -8,18 +8,8 @@
  * Contributors:
  *   Stuart McCulloch (Sonatype, Inc.) - initial API and implementation
  *******************************************************************************/
+
 package org.eclipse.sisu.plexus;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import org.codehaus.plexus.component.annotations.Configuration;
-import org.codehaus.plexus.component.annotations.Requirement;
-import org.eclipse.sisu.bean.BeanManager;
-import org.eclipse.sisu.bean.BeanProperty;
-import org.eclipse.sisu.bean.PropertyBinding;
-import org.eclipse.sisu.inject.DeferredClass;
-import org.eclipse.sisu.space.URLClassSpace;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Binder;
@@ -28,192 +18,176 @@ import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.name.Names;
 
-import junit.framework.TestCase;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
-public class PlexusBeanMetadataTest
-    extends TestCase
-{
+import org.codehaus.plexus.component.annotations.Configuration;
+import org.codehaus.plexus.component.annotations.Requirement;
+import org.eclipse.sisu.bean.BeanManager;
+import org.eclipse.sisu.bean.BeanProperty;
+import org.eclipse.sisu.bean.PropertyBinding;
+import org.eclipse.sisu.inject.DeferredClass;
+import org.eclipse.sisu.space.URLClassSpace;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+public class PlexusBeanMetadataTest {
+
     @Inject
-    @Named( "2" )
+    @Named("2")
     Bean bean;
 
     @Inject
     Injector injector;
 
-    @Override
-    protected void setUp()
-    {
-        Guice.createInjector( new AbstractModule()
-        {
+    @BeforeEach
+    protected void setUp() {
+        Guice.createInjector(new AbstractModule() {
             @Override
-            protected void configure()
-            {
-                install( new PlexusDateTypeConverter() );
+            protected void configure() {
+                install(new PlexusDateTypeConverter());
 
-                bind( PlexusBeanLocator.class ).to( DefaultPlexusBeanLocator.class );
-                bind( PlexusBeanConverter.class ).to( PlexusXmlBeanConverter.class );
+                bind(PlexusBeanLocator.class).to(DefaultPlexusBeanLocator.class);
+                bind(PlexusBeanConverter.class).to(PlexusXmlBeanConverter.class);
 
-                bindConstant().annotatedWith( Names.named( "KEY1" ) ).to( "REQUIREMENT" );
+                bindConstant().annotatedWith(Names.named("KEY1")).to("REQUIREMENT");
 
                 final BeanManager manager = new TestBeanManager();
 
-                install( new PlexusBindingModule( null, new BeanSourceA() ) );
-                install( new PlexusBindingModule( manager, new BeanSourceB() ) );
-                install( new PlexusBindingModule( null, new BeanSourceC() ) );
-                install( new PlexusBindingModule( null, new CustomizedBeanSource() ) );
+                install(new PlexusBindingModule(null, new BeanSourceA()));
+                install(new PlexusBindingModule(manager, new BeanSourceB()));
+                install(new PlexusBindingModule(null, new BeanSourceC()));
+                install(new PlexusBindingModule(null, new CustomizedBeanSource()));
 
-                requestInjection( PlexusBeanMetadataTest.this );
+                requestInjection(PlexusBeanMetadataTest.this);
             }
-        } );
+        });
     }
 
     static class TestBeanManager
-        implements BeanManager
-    {
-        public boolean manage( final Class<?> clazz )
-        {
+      implements BeanManager {
+
+        public boolean manage(final Class<?> clazz) {
             return false;
         }
 
-        public PropertyBinding manage( final BeanProperty<?> property )
-        {
+        public PropertyBinding manage(final BeanProperty<?> property) {
             return null;
         }
 
-        public boolean manage( final Object bean )
-        {
+        public boolean manage(final Object bean) {
             return false;
         }
 
-        public boolean unmanage( final Object bean )
-        {
+        public boolean unmanage(final Object bean) {
             return false;
         }
 
-        public boolean unmanage()
-        {
+        public boolean unmanage() {
             return false;
         }
     }
 
-    interface Bean
-    {
+    interface Bean {
+
         Object getExtraMetadata();
 
-        void setExtraMetadata( Object metadata );
+        void setExtraMetadata(Object metadata);
     }
 
     static class DefaultBean1
-        implements Bean
-    {
+      implements Bean {
+
         Object extraMetadata;
 
-        public Object getExtraMetadata()
-        {
+        public Object getExtraMetadata() {
             return extraMetadata;
         }
 
-        public void setExtraMetadata( final Object metadata )
-        {
+        public void setExtraMetadata(final Object metadata) {
             extraMetadata = metadata;
         }
     }
 
-    static class DefaultBean2
-    {
+    static class DefaultBean2 {
+
         String extraMetadata;
 
         String leftovers;
     }
 
     static class BeanSourceA
-        implements PlexusBeanModule
-    {
-        public PlexusBeanSource configure( final Binder binder )
-        {
-            binder.withSource( "A" ).bind( Bean.class ).annotatedWith( Names.named( "2" ) ).to( DefaultBean1.class ).asEagerSingleton();
+      implements PlexusBeanModule {
+
+        public PlexusBeanSource configure(final Binder binder) {
+            binder.withSource("A").bind(Bean.class).annotatedWith(Names.named("2")).to(DefaultBean1.class).asEagerSingleton();
             return null;
         }
     }
 
     static class BeanSourceB
-        implements PlexusBeanModule
-    {
-        public PlexusBeanSource configure( final Binder binder )
-        {
-            binder.withSource( "B" ).bind( DefaultBean2.class );
+      implements PlexusBeanModule {
+
+        public PlexusBeanSource configure(final Binder binder) {
+            binder.withSource("B").bind(DefaultBean2.class);
             return null;
         }
     }
 
     static class BeanSourceC
-        implements PlexusBeanModule
-    {
-        public PlexusBeanSource configure( final Binder binder )
-        {
-            binder.withSource( "C" ).bind( DefaultBean2.class ).annotatedWith( Names.named( "2" ) ).to( DefaultBean2.class );
+      implements PlexusBeanModule {
+
+        public PlexusBeanSource configure(final Binder binder) {
+            binder.withSource("C").bind(DefaultBean2.class).annotatedWith(Names.named("2")).to(DefaultBean2.class);
             return null;
         }
     }
 
     static class CustomizedBeanSource
-        implements PlexusBeanModule, PlexusBeanSource
-    {
-        public PlexusBeanSource configure( final Binder binder )
-        {
+      implements PlexusBeanModule, PlexusBeanSource {
+
+        public PlexusBeanSource configure(final Binder binder) {
             return this;
         }
 
-        public PlexusBeanMetadata getBeanMetadata( final Class<?> implementation )
-        {
-            if ( DefaultBean1.class.equals( implementation ) )
-            {
-                return new PlexusBeanMetadata()
-                {
-                    public boolean isEmpty()
-                    {
+        public PlexusBeanMetadata getBeanMetadata(final Class<?> implementation) {
+            if (DefaultBean1.class.equals(implementation)) {
+                return new PlexusBeanMetadata() {
+                    public boolean isEmpty() {
                         return false;
                     }
 
-                    @SuppressWarnings( "deprecation" )
-                    public Requirement getRequirement( final BeanProperty<?> property )
-                    {
-                        if ( "extraMetadata".equals( property.getName() ) )
-                        {
-                            return new RequirementImpl( String.class, false, "KEY1" );
+                    @SuppressWarnings("deprecation")
+                    public Requirement getRequirement(final BeanProperty<?> property) {
+                        if ("extraMetadata".equals(property.getName())) {
+                            return new RequirementImpl(String.class, false, "KEY1");
                         }
                         return null;
                     }
 
-                    public Configuration getConfiguration( final BeanProperty<?> property )
-                    {
+                    public Configuration getConfiguration(final BeanProperty<?> property) {
                         return null;
                     }
                 };
             }
-            if ( DefaultBean2.class.equals( implementation ) )
-            {
-                return new PlexusBeanMetadata()
-                {
+            if (DefaultBean2.class.equals(implementation)) {
+                return new PlexusBeanMetadata() {
                     private boolean used = false;
 
-                    public boolean isEmpty()
-                    {
+                    public boolean isEmpty() {
                         return used;
                     }
 
-                    public Requirement getRequirement( final BeanProperty<?> property )
-                    {
+                    public Requirement getRequirement(final BeanProperty<?> property) {
                         return null;
                     }
 
-                    public Configuration getConfiguration( final BeanProperty<?> property )
-                    {
-                        if ( "extraMetadata".equals( property.getName() ) )
-                        {
+                    public Configuration getConfiguration(final BeanProperty<?> property) {
+                        if ("extraMetadata".equals(property.getName())) {
                             used = true;
 
-                            return new ConfigurationImpl( "KEY2", "CONFIGURATION" );
+                            return new ConfigurationImpl("KEY2", "CONFIGURATION");
                         }
                         return null;
                     }
@@ -223,15 +197,14 @@ public class PlexusBeanMetadataTest
         }
     }
 
-    public void testExtraMetadata()
-    {
-        assertEquals( "REQUIREMENT", bean.getExtraMetadata() );
-        assertEquals( "CONFIGURATION", injector.getInstance( DefaultBean2.class ).extraMetadata );
-        assertSame( bean, injector.getInstance( Key.get( Bean.class, Names.named( "2" ) ) ) );
+    @Test
+    public void testExtraMetadata() {
+        Assertions.assertEquals("REQUIREMENT", bean.getExtraMetadata());
+        Assertions.assertEquals("CONFIGURATION", injector.getInstance(DefaultBean2.class).extraMetadata);
+        Assertions.assertSame(bean, injector.getInstance(Key.get(Bean.class, Names.named("2"))));
     }
 
-    static DeferredClass<?> defer( final Class<?> clazz )
-    {
-        return new URLClassSpace( TestCase.class.getClassLoader() ).deferLoadClass( clazz.getName() );
+    static DeferredClass<?> defer(final Class<?> clazz) {
+        return new URLClassSpace(PlexusBeanMetadataTest.class.getClassLoader()).deferLoadClass(clazz.getName());
     }
 }

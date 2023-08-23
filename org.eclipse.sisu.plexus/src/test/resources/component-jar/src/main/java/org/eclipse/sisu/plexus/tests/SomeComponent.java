@@ -8,9 +8,9 @@
  * Contributors:
  *    Takari, Inc. - initial API and implementation
  *******************************************************************************/
+
 package org.eclipse.sisu.plexus.tests;
 
-public class SomeComponent
-{
+public class SomeComponent {
 
 }

@@ -10,56 +10,58 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus;
 
 import java.net.URL;
+
 import java.util.Map;
 
 import org.codehaus.plexus.classworlds.ClassWorld;
 import org.codehaus.plexus.classworlds.realm.ClassRealm;
 import org.codehaus.plexus.context.Context;
 
-public interface ContainerConfiguration
-{
-    ContainerConfiguration setName( String name );
+public interface ContainerConfiguration {
 
-    ContainerConfiguration setContainerConfiguration( String configurationPath );
+    ContainerConfiguration setName(String name);
+
+    ContainerConfiguration setContainerConfiguration(String configurationPath);
 
     String getContainerConfiguration();
 
-    ContainerConfiguration setContainerConfigurationURL( URL configurationUrl );
+    ContainerConfiguration setContainerConfigurationURL(URL configurationUrl);
 
     URL getContainerConfigurationURL();
 
-    ContainerConfiguration setClassWorld( ClassWorld classWorld );
+    ContainerConfiguration setClassWorld(ClassWorld classWorld);
 
     ClassWorld getClassWorld();
 
-    ContainerConfiguration setRealm( ClassRealm classRealm );
+    ContainerConfiguration setRealm(ClassRealm classRealm);
 
     ClassRealm getRealm();
 
-    ContainerConfiguration setContext( Map<Object, Object> context );
+    ContainerConfiguration setContext(Map<Object, Object> context);
 
     Map<Object, Object> getContext();
 
-    ContainerConfiguration setComponentVisibility( String visibility );
+    ContainerConfiguration setComponentVisibility(String visibility);
 
     String getComponentVisibility();
 
-    ContainerConfiguration setAutoWiring( boolean on );
+    ContainerConfiguration setAutoWiring(boolean on);
 
     boolean getAutoWiring();
 
-    ContainerConfiguration setClassPathScanning( String scanning );
+    ContainerConfiguration setClassPathScanning(String scanning);
 
     String getClassPathScanning();
 
-    ContainerConfiguration setContextComponent( Context context );
+    ContainerConfiguration setContextComponent(Context context);
 
     Context getContextComponent();
 
-    ContainerConfiguration setJSR250Lifecycle( boolean on );
+    ContainerConfiguration setJSR250Lifecycle(boolean on);
 
     boolean getJSR250Lifecycle();
 }

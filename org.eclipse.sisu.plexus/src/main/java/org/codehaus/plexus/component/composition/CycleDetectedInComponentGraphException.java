@@ -10,20 +10,19 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component.composition;
 
 public final class CycleDetectedInComponentGraphException
-    extends Exception
-{
+  extends Exception {
+
     private static final long serialVersionUID = 1L;
 
-    public CycleDetectedInComponentGraphException( final String message )
-    {
-        super( message );
+    public CycleDetectedInComponentGraphException(final String message) {
+        super(message);
     }
 
-    public CycleDetectedInComponentGraphException( final String message, final Throwable detail )
-    {
-        super( message, detail );
+    public CycleDetectedInComponentGraphException(final String message, final Throwable detail) {
+        super(message, detail);
     }
 }

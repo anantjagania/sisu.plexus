@@ -10,13 +10,14 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.personality.plexus.lifecycle.phase;
 
-public interface Startable
-{
+public interface Startable {
+
     void start()
-        throws StartingException;
+      throws StartingException;
 
     void stop()
-        throws StoppingException;
+      throws StoppingException;
 }

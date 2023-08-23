@@ -10,10 +10,10 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component.repository;
 
-public class ComponentRequirement
-{
+public class ComponentRequirement {
     // ----------------------------------------------------------------------
     // Implementation fields
     // ----------------------------------------------------------------------
@@ -30,76 +30,62 @@ public class ComponentRequirement
     // Public methods
     // ----------------------------------------------------------------------
 
-    public final void setRole( final String role )
-    {
+    public final void setRole(final String role) {
         this.role = role;
     }
 
-    public final void setRoleHint( final String hint )
-    {
+    public final void setRoleHint(final String hint) {
         // empty/null hint represents wildcard
         this.hint = null != hint ? hint : "";
     }
 
-    public final void setFieldName( final String name )
-    {
+    public final void setFieldName(final String name) {
         this.name = name;
     }
 
-    public final void setOptional( final boolean optional )
-    {
+    public final void setOptional(final boolean optional) {
         this.optional = optional;
     }
 
-    @SuppressWarnings( "unused" )
-    public final void setFieldMappingType( final String mappingType )
-    {
+    @SuppressWarnings("unused")
+    public final void setFieldMappingType(final String mappingType) {
         // ignore
     }
 
-    public final String getRole()
-    {
+    public final String getRole() {
         return role;
     }
 
-    public final String getRoleHint()
-    {
+    public final String getRoleHint() {
         return hint;
     }
 
-    public final String getFieldName()
-    {
+    public final String getFieldName() {
         return name;
     }
 
-    public final boolean isOptional()
-    {
+    public final boolean isOptional() {
         return optional;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "ComponentRequirement{role='" + role + "', roleHint='" + hint + "', fieldName='" + name + "'}";
     }
 
     @Override
-    public boolean equals( final Object rhs )
-    {
-        if ( this == rhs )
-        {
+    public boolean equals(final Object rhs) {
+        if (this == rhs) {
             return true;
         }
-        if ( rhs instanceof ComponentRequirement )
-        {
-            return id().equals( ( (ComponentRequirement) rhs ).id() );
+        if (rhs instanceof ComponentRequirement) {
+            return id().equals(((ComponentRequirement)rhs).id());
         }
         return false;
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return id().hashCode();
     }
 
@@ -107,8 +93,7 @@ public class ComponentRequirement
     // Implementation methods
     // ----------------------------------------------------------------------
 
-    private final String id()
-    {
+    private final String id() {
         return role + ':' + hint;
     }
 }

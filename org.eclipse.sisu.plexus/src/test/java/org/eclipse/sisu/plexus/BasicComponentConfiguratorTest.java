@@ -4,10 +4,12 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
+
 package org.eclipse.sisu.plexus;
 
 import java.io.File;
 import java.io.IOException;
+
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,89 +21,73 @@ import org.codehaus.plexus.component.configurator.expression.DefaultExpressionEv
 import org.codehaus.plexus.component.configurator.expression.ExpressionEvaluator;
 import org.codehaus.plexus.configuration.DefaultPlexusConfiguration;
 import org.codehaus.plexus.configuration.PlexusConfiguration;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
-import static org.junit.Assert.assertEquals;
 
-public class BasicComponentConfiguratorTest
-{
-    @Rule
-    public TemporaryFolder tmpDirectory = new TemporaryFolder();
+public class BasicComponentConfiguratorTest {
 
     private ComponentConfigurator configurator;
 
-    @Before
-    public void setUp()
-    {
+    @BeforeEach
+    public void setUp() {
         configurator = new BasicComponentConfigurator();
     }
 
     @Test
-    public void testSimplePathOnDefaultFileSystem()
-        throws ComponentConfigurationException
-    {
+    public void testSimplePathOnDefaultFileSystem(@TempDir Path tempDir)
+      throws ComponentConfigurationException {
         PathTestComponent component = new PathTestComponent();
-        Path absolutePath = Paths.get( "" ).resolve( "absolute" ).toAbsolutePath();
-        configure( component, "path", "readme.txt", "absolutePath", absolutePath.toString(), "file", "readme.txt",
-                   "absoluteFile", absolutePath.toString() );
+        Path absolutePath = Paths.get("").resolve("absolute").toAbsolutePath();
+        configure(tempDir, component, "path", "readme.txt", "absolutePath", absolutePath.toString(), "file", "readme.txt",
+          "absoluteFile", absolutePath.toString());
         // path must be converted to absolute one
-        assertEquals( tmpDirectory.getRoot().toPath().resolve( "readme.txt" ), component.path );
-        assertEquals( FileSystems.getDefault(), component.path.getFileSystem() );
-        assertEquals( absolutePath, component.absolutePath );
-        assertEquals( new File( tmpDirectory.getRoot(), "readme.txt" ), component.file );
-        assertEquals( absolutePath.toFile(), component.absoluteFile );
+        Assertions.assertEquals(tempDir.getRoot().toAbsolutePath().resolve("readme.txt"), component.path);
+        Assertions.assertEquals(FileSystems.getDefault(), component.path.getFileSystem());
+        Assertions.assertEquals(absolutePath, component.absolutePath);
+        Assertions.assertEquals(new File(tempDir.getRoot().toFile(), "readme.txt"), component.file);
+        Assertions.assertEquals(absolutePath.toFile(), component.absoluteFile);
     }
 
     @Test
-    public void testTypeWithoutConverterButConstructorAcceptingString()
-        throws ComponentConfigurationException, IOException
-    {
+    public void testTypeWithoutConverterButConstructorAcceptingString(@TempDir Path tempDir)
+      throws ComponentConfigurationException, IOException {
         CustomTypeComponent component = new CustomTypeComponent();
-        configure( component, "custom", "hello world" );
-        assertEquals( "hello world", component.custom.toString() );
+        configure(tempDir, component, "custom", "hello world");
+        Assertions.assertEquals("hello world", component.custom.toString());
     }
 
-    private void configure( Object component, String... keysAndValues )
-        throws ComponentConfigurationException
-    {
-        final DefaultPlexusConfiguration config = new DefaultPlexusConfiguration( "testConfig" );
-        if ( keysAndValues.length % 2 != 0 )
-        {
-            throw new IllegalArgumentException( "Even number of keys and values expected" );
+    private void configure(Path tempDir, Object component, String... keysAndValues)
+      throws ComponentConfigurationException {
+        final DefaultPlexusConfiguration config = new DefaultPlexusConfiguration("testConfig");
+        if (keysAndValues.length % 2 != 0) {
+            throw new IllegalArgumentException("Even number of keys and values expected");
         }
-        for ( int i = 0; i < keysAndValues.length; i += 2 )
-        {
-            config.addChild( keysAndValues[i], keysAndValues[i + 1] );
+        for (int i = 0; i < keysAndValues.length; i += 2) {
+            config.addChild(keysAndValues[i], keysAndValues[i + 1]);
         }
-        configure( component, config );
+        configure(component, config, tempDir);
     }
 
-    private void configure( Object component, PlexusConfiguration config )
-        throws ComponentConfigurationException
-    {
-        final ExpressionEvaluator evaluator = new DefaultExpressionEvaluator()
-        {
+    private void configure(Object component, PlexusConfiguration config, Path tempDir)
+      throws ComponentConfigurationException {
+        final ExpressionEvaluator evaluator = new DefaultExpressionEvaluator() {
             @Override
-            public File alignToBaseDirectory( File path )
-            {
-                if ( !path.isAbsolute() )
-                {
-                    return new File( tmpDirectory.getRoot(), path.getPath() );
-                }
-                else
-                {
+            public File alignToBaseDirectory(File path) {
+                if (!path.isAbsolute()) {
+                    return new File(tempDir.getRoot().toFile(), path.getPath());
+                } else {
                     return path;
                 }
             }
         };
-        configurator.configureComponent( component, config, evaluator, null );
+        configurator.configureComponent(component, config, evaluator, null);
     }
 
-    static final class PathTestComponent
-    {
+    static final class PathTestComponent {
+
         Path path;
 
         Path absolutePath;
@@ -111,29 +97,26 @@ public class BasicComponentConfiguratorTest
         File absoluteFile;
     }
 
-    public static final class CustomType
-    {
+    public static final class CustomType {
+
         private final String input;
 
-        public CustomType()
-        {
+        public CustomType() {
             this.input = "invalid";
         }
 
-        public CustomType( String input )
-        {
+        public CustomType(String input) {
             this.input = input;
         }
 
         @Override
-        public String toString()
-        {
+        public String toString() {
             return input;
         }
     }
 
-    static final class CustomTypeComponent
-    {
+    static final class CustomTypeComponent {
+
         CustomType custom;
     }
 }

@@ -10,20 +10,19 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component.configurator.expression;
 
 import java.io.File;
 
 public class DefaultExpressionEvaluator
-    implements ExpressionEvaluator
-{
-    public Object evaluate( final String expression )
-    {
+  implements ExpressionEvaluator {
+
+    public Object evaluate(final String expression) {
         return expression;
     }
 
-    public File alignToBaseDirectory( final File path )
-    {
+    public File alignToBaseDirectory(final File path) {
         return path;
     }
 }

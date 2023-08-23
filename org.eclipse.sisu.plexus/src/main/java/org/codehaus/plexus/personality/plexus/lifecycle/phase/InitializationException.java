@@ -10,20 +10,19 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.personality.plexus.lifecycle.phase;
 
 public final class InitializationException
-    extends Exception
-{
+  extends Exception {
+
     private static final long serialVersionUID = 1L;
 
-    public InitializationException( final String message )
-    {
-        super( message );
+    public InitializationException(final String message) {
+        super(message);
     }
 
-    public InitializationException( final String message, final Throwable cause )
-    {
-        super( message, cause );
+    public InitializationException(final String message, final Throwable cause) {
+        super(message, cause);
     }
 }

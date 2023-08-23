@@ -10,24 +10,25 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component.configurator;
 
 import org.codehaus.plexus.classworlds.realm.ClassRealm;
 import org.codehaus.plexus.component.configurator.expression.ExpressionEvaluator;
 import org.codehaus.plexus.configuration.PlexusConfiguration;
 
-public interface ComponentConfigurator
-{
+public interface ComponentConfigurator {
+
     String ROLE = ComponentConfigurator.class.getName();
 
-    void configureComponent( Object component, PlexusConfiguration configuration, ClassRealm realm )
-        throws ComponentConfigurationException;
+    void configureComponent(Object component, PlexusConfiguration configuration, ClassRealm realm)
+      throws ComponentConfigurationException;
 
-    void configureComponent( Object component, PlexusConfiguration configuration, ExpressionEvaluator evaluator,
-                             ClassRealm realm )
-        throws ComponentConfigurationException;
+    void configureComponent(Object component, PlexusConfiguration configuration, ExpressionEvaluator evaluator,
+      ClassRealm realm)
+      throws ComponentConfigurationException;
 
-    void configureComponent( Object component, PlexusConfiguration configuration, ExpressionEvaluator evaluator,
-                             ClassRealm realm, ConfigurationListener listener )
-        throws ComponentConfigurationException;
+    void configureComponent(Object component, PlexusConfiguration configuration, ExpressionEvaluator evaluator,
+      ClassRealm realm, ConfigurationListener listener)
+      throws ComponentConfigurationException;
 }

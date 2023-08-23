@@ -10,7 +10,12 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component.configurator.converters.basic;
+
+import java.io.File;
+
+import java.nio.file.Path;
 
 import org.codehaus.plexus.component.configurator.ComponentConfigurationException;
 import org.codehaus.plexus.component.configurator.ConfigurationListener;
@@ -18,26 +23,21 @@ import org.codehaus.plexus.component.configurator.converters.lookup.ConverterLoo
 import org.codehaus.plexus.component.configurator.expression.ExpressionEvaluator;
 import org.codehaus.plexus.configuration.PlexusConfiguration;
 
-import java.io.File;
-import java.nio.file.Path;
-
 public class PathConverter
-    extends FileConverter
-{
-    public boolean canConvert( final Class<?> type )
-    {
-        return Path.class.equals( type );
+  extends FileConverter {
+
+    public boolean canConvert(final Class<?> type) {
+        return Path.class.equals(type);
     }
 
     @Override
-    public Object fromConfiguration( final ConverterLookup lookup, final PlexusConfiguration configuration,
-                                     final Class<?> type, final Class<?> enclosingType, final ClassLoader loader,
-                                     final ExpressionEvaluator evaluator, final ConfigurationListener listener )
-        throws ComponentConfigurationException
-    {
+    public Object fromConfiguration(final ConverterLookup lookup, final PlexusConfiguration configuration,
+      final Class<?> type, final Class<?> enclosingType, final ClassLoader loader,
+      final ExpressionEvaluator evaluator, final ConfigurationListener listener)
+      throws ComponentConfigurationException {
         final Object result =
-            super.fromConfiguration( lookup, configuration, type, enclosingType, loader, evaluator, listener );
+          super.fromConfiguration(lookup, configuration, type, enclosingType, loader, evaluator, listener);
 
-        return result instanceof File ? ( (File) result ).toPath() : result;
+        return result instanceof File ? ((File)result).toPath() : result;
     }
 }

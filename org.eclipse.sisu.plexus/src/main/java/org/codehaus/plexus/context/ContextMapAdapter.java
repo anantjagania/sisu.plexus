@@ -10,6 +10,7 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.context;
 
 import java.util.Collection;
@@ -17,8 +18,7 @@ import java.util.Map;
 import java.util.Set;
 
 public final class ContextMapAdapter
-    implements Map<Object, Object>
-{
+  implements Map<Object, Object> {
     // ----------------------------------------------------------------------
     // Implementation fields
     // ----------------------------------------------------------------------
@@ -29,8 +29,7 @@ public final class ContextMapAdapter
     // Constructors
     // ----------------------------------------------------------------------
 
-    public ContextMapAdapter( final Context context )
-    {
+    public ContextMapAdapter(final Context context) {
         contextData = context.getContextData();
     }
 
@@ -41,9 +40,8 @@ public final class ContextMapAdapter
     /*
      * Only method used when interpolating Plexus configuration
      */
-    public Object get( final Object key )
-    {
-        final Object value = contextData.get( key );
+    public Object get(final Object key) {
+        final Object value = contextData.get(key);
         return value instanceof String ? value : null;
     }
 
@@ -51,58 +49,47 @@ public final class ContextMapAdapter
     // Unsupported methods
     // ----------------------------------------------------------------------
 
-    public int size()
-    {
+    public int size() {
         throw new UnsupportedOperationException();
     }
 
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
         throw new UnsupportedOperationException();
     }
 
-    public boolean containsKey( final Object key )
-    {
+    public boolean containsKey(final Object key) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean containsValue( final Object value )
-    {
+    public boolean containsValue(final Object value) {
         throw new UnsupportedOperationException();
     }
 
-    public Object put( final Object key, final Object value )
-    {
+    public Object put(final Object key, final Object value) {
         throw new UnsupportedOperationException();
     }
 
-    public void putAll( final Map<?, ?> map )
-    {
+    public void putAll(final Map<?, ?> map) {
         throw new UnsupportedOperationException();
     }
 
-    public Object remove( final Object key )
-    {
+    public Object remove(final Object key) {
         throw new UnsupportedOperationException();
     }
 
-    public void clear()
-    {
+    public void clear() {
         throw new UnsupportedOperationException();
     }
 
-    public Set<Object> keySet()
-    {
+    public Set<Object> keySet() {
         throw new UnsupportedOperationException();
     }
 
-    public Collection<Object> values()
-    {
+    public Collection<Object> values() {
         throw new UnsupportedOperationException();
     }
 
-    public Set<Entry<Object, Object>> entrySet()
-    {
+    public Set<Entry<Object, Object>> entrySet() {
         throw new UnsupportedOperationException();
     }
 }

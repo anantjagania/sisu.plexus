@@ -10,6 +10,7 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component.configurator.converters.basic;
 
 import org.codehaus.plexus.component.configurator.ComponentConfigurationException;
@@ -22,31 +23,24 @@ import org.codehaus.plexus.component.configurator.expression.TypeAwareExpression
 import org.codehaus.plexus.configuration.PlexusConfiguration;
 
 public abstract class AbstractBasicConverter
-    extends AbstractConfigurationConverter
-{
-    public Object fromConfiguration( final ConverterLookup lookup, final PlexusConfiguration configuration,
-                                     final Class<?> type, final Class<?> enclosingType, final ClassLoader loader,
-                                     final ExpressionEvaluator evaluator, final ConfigurationListener listener )
-        throws ComponentConfigurationException
-    {
-        if ( configuration.getChildCount() > 0 )
-        {
-            throw new ComponentConfigurationException( "Basic element '" + configuration.getName()
-                + "' must not contain child elements" );
+  extends AbstractConfigurationConverter {
+
+    public Object fromConfiguration(final ConverterLookup lookup, final PlexusConfiguration configuration,
+      final Class<?> type, final Class<?> enclosingType, final ClassLoader loader,
+      final ExpressionEvaluator evaluator, final ConfigurationListener listener)
+      throws ComponentConfigurationException {
+        if (configuration.getChildCount() > 0) {
+            throw new ComponentConfigurationException("Basic element '" + configuration.getName()
+              + "' must not contain child elements");
         }
 
-        Object result = fromExpression( configuration, evaluator, type );
-        if ( result instanceof String )
-        {
-            try
-            {
-                result = fromString( (String) result );
-            }
-            catch ( final ComponentConfigurationException e )
-            {
-                if ( null == e.getFailedConfiguration() )
-                {
-                    e.setFailedConfiguration( configuration );
+        Object result = fromExpression(configuration, evaluator, type);
+        if (result instanceof String) {
+            try {
+                result = fromString((String)result);
+            } catch (final ComponentConfigurationException e) {
+                if (null == e.getFailedConfiguration()) {
+                    e.setFailedConfiguration(configuration);
                 }
                 throw e;
             }
@@ -58,56 +52,43 @@ public abstract class AbstractBasicConverter
     // Customizable methods
     // ----------------------------------------------------------------------
 
-    protected abstract Object fromString( final String str )
-        throws ComponentConfigurationException;
+    protected abstract Object fromString(final String str)
+      throws ComponentConfigurationException;
 
     // ----------------------------------------------------------------------
     // Shared methods
     // ----------------------------------------------------------------------
 
     @Override
-    protected final Object fromExpression( final PlexusConfiguration configuration, final ExpressionEvaluator evaluator,
-                                           final Class<?> type )
-        throws ComponentConfigurationException
-    {
+    protected final Object fromExpression(final PlexusConfiguration configuration, final ExpressionEvaluator evaluator,
+      final Class<?> type)
+      throws ComponentConfigurationException {
         String value = configuration.getValue();
-        try
-        {
+        try {
             Object result = null;
-            if ( null != value && value.length() > 0 )
-            {
-                if ( evaluator instanceof TypeAwareExpressionEvaluator )
-                {
-                    result = ( (TypeAwareExpressionEvaluator) evaluator ).evaluate( value, type );
-                }
-                else
-                {
-                    result = evaluator.evaluate( value );
+            if (null != value && value.length() > 0) {
+                if (evaluator instanceof TypeAwareExpressionEvaluator) {
+                    result = ((TypeAwareExpressionEvaluator)evaluator).evaluate(value, type);
+                } else {
+                    result = evaluator.evaluate(value);
                 }
             }
-            if ( null == result )
-            {
-                value = configuration.getAttribute( "default-value" );
-                if ( null != value && value.length() > 0 )
-                {
-                    if ( evaluator instanceof TypeAwareExpressionEvaluator )
-                    {
-                        result = ( (TypeAwareExpressionEvaluator) evaluator ).evaluate( value, type );
-                    }
-                    else
-                    {
-                        result = evaluator.evaluate( value );
+            if (null == result) {
+                value = configuration.getAttribute("default-value");
+                if (null != value && value.length() > 0) {
+                    if (evaluator instanceof TypeAwareExpressionEvaluator) {
+                        result = ((TypeAwareExpressionEvaluator)evaluator).evaluate(value, type);
+                    } else {
+                        result = evaluator.evaluate(value);
                     }
                 }
             }
             return result;
-        }
-        catch ( final ExpressionEvaluationException e )
-        {
-            final String reason = String.format( "Cannot evaluate expression '%s' for configuration entry '%s'", value,
-                                                 configuration.getName() );
+        } catch (final ExpressionEvaluationException e) {
+            final String reason = String.format("Cannot evaluate expression '%s' for configuration entry '%s'", value,
+              configuration.getName());
 
-            throw new ComponentConfigurationException( configuration, reason, e );
+            throw new ComponentConfigurationException(configuration, reason, e);
         }
     }
 }

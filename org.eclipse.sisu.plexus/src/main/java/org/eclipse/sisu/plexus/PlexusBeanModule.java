@@ -8,6 +8,7 @@
  * Contributors:
  *   Stuart McCulloch (Sonatype, Inc.) - initial API and implementation
  *******************************************************************************/
+
 package org.eclipse.sisu.plexus;
 
 import com.google.inject.Binder;
@@ -16,12 +17,12 @@ import com.google.inject.Module;
 /**
  * {@link Module}-like interface for contributing Plexus bindings with additional metadata.
  */
-public interface PlexusBeanModule
-{
+public interface PlexusBeanModule {
+
     /**
      * Contributes bindings and returns any associated {@link PlexusBeanSource} metadata.
-     * 
+     *
      * @see Module#configure(Binder)
      */
-    PlexusBeanSource configure( Binder binder );
+    PlexusBeanSource configure(Binder binder);
 }

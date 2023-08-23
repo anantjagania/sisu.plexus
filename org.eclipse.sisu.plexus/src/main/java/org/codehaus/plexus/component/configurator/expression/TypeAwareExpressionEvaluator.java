@@ -10,11 +10,12 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component.configurator.expression;
 
 public interface TypeAwareExpressionEvaluator
-    extends ExpressionEvaluator
-{
-    Object evaluate( String expression, Class<?> type )
-        throws ExpressionEvaluationException;
+  extends ExpressionEvaluator {
+
+    Object evaluate(String expression, Class<?> type)
+      throws ExpressionEvaluationException;
 }

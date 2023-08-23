@@ -1,11 +1,11 @@
 <component-set>
 
-  <components>
-    <component>
-      <implementation>
-        no.such.class
-      </implementation>
-    </component>
-  </components>
+    <components>
+        <component>
+            <implementation>
+                no.such.class
+            </implementation>
+        </component>
+    </components>
 
 </component-set>

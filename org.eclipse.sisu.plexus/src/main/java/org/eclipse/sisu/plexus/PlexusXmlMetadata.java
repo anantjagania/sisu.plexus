@@ -8,6 +8,7 @@
  * Contributors:
  *   Stuart McCulloch (Sonatype, Inc.) - initial API and implementation
  *******************************************************************************/
+
 package org.eclipse.sisu.plexus;
 
 import java.util.Collections;
@@ -22,8 +23,7 @@ import org.eclipse.sisu.bean.BeanProperty;
  * Consumable {@link PlexusBeanMetadata} that uses {@link BeanProperty} names as keys.
  */
 final class PlexusXmlMetadata
-    implements PlexusBeanMetadata
-{
+  implements PlexusBeanMetadata {
     // ----------------------------------------------------------------------
     // Implementation fields
     // ----------------------------------------------------------------------
@@ -36,33 +36,28 @@ final class PlexusXmlMetadata
     // Constructors
     // ----------------------------------------------------------------------
 
-    PlexusXmlMetadata( final Map<String, Configuration> configurationMap,
-                       final Map<String, Requirement> requirementMap )
-    {
-        merge( configurationMap, requirementMap );
+    PlexusXmlMetadata(final Map<String, Configuration> configurationMap,
+      final Map<String, Requirement> requirementMap) {
+        merge(configurationMap, requirementMap);
     }
 
     // ----------------------------------------------------------------------
     // Public methods
     // ----------------------------------------------------------------------
 
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
         return configurationMap.isEmpty() && requirementMap.isEmpty();
     }
 
-    public Configuration getConfiguration( final BeanProperty<?> property )
-    {
-        return configurationMap.remove( property.getName() );
+    public Configuration getConfiguration(final BeanProperty<?> property) {
+        return configurationMap.remove(property.getName());
     }
 
-    public Requirement getRequirement( final BeanProperty<?> property )
-    {
-        Requirement requirement = requirementMap.remove( property.getName() );
-        if ( null == requirement )
-        {
+    public Requirement getRequirement(final BeanProperty<?> property) {
+        Requirement requirement = requirementMap.remove(property.getName());
+        if (null == requirement) {
             // perhaps requirement uses the fully-qualified role name (see PlexusXmlScanner)
-            requirement = requirementMap.remove( property.getType().getRawType().getName() );
+            requirement = requirementMap.remove(property.getType().getRawType().getName());
         }
         return requirement;
     }
@@ -73,14 +68,13 @@ final class PlexusXmlMetadata
 
     /**
      * Merges the given configuration and requirements with the current metadata, without overwriting existing entries.
-     * 
+     *
      * @param extraConfiguration The extra configuration
      * @param extraRequirements The extra requirements
      */
-    void merge( final Map<String, Configuration> extraConfiguration, final Map<String, Requirement> extraRequirements )
-    {
-        configurationMap = addIfMissing( configurationMap, extraConfiguration );
-        requirementMap = addIfMissing( requirementMap, extraRequirements );
+    void merge(final Map<String, Configuration> extraConfiguration, final Map<String, Requirement> extraRequirements) {
+        configurationMap = addIfMissing(configurationMap, extraConfiguration);
+        requirementMap = addIfMissing(requirementMap, extraRequirements);
     }
 
     // ----------------------------------------------------------------------
@@ -89,27 +83,24 @@ final class PlexusXmlMetadata
 
     /**
      * Looks for keys that exist in the secondary map, but not the primary, and adds their mappings to the primary map.
-     * 
+     *
      * @param primary The primary map
      * @param secondary The secondary map
      */
-    private static <K, V> Map<K, V> addIfMissing( final Map<K, V> primary, final Map<K, V> secondary )
-    {
+    private static <K, V> Map<K, V> addIfMissing(final Map<K, V> primary, final Map<K, V> secondary) {
         // nothing to add?
-        if ( secondary.isEmpty() )
-        {
+        if (secondary.isEmpty()) {
             return primary;
         }
 
         // nothing to merge?
-        if ( primary.isEmpty() )
-        {
+        if (primary.isEmpty()) {
             return secondary;
         }
 
         // primary mappings always override secondary mappings
-        final Map<K, V> tempMap = new HashMap<K, V>( secondary );
-        tempMap.putAll( primary );
+        final Map<K, V> tempMap = new HashMap<K, V>(secondary);
+        tempMap.putAll(primary);
         return tempMap;
     }
 }

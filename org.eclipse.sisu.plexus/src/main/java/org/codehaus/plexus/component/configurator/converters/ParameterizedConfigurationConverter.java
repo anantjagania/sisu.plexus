@@ -10,6 +10,7 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component.configurator.converters;
 
 import java.lang.reflect.Type;
@@ -21,10 +22,10 @@ import org.codehaus.plexus.component.configurator.expression.ExpressionEvaluator
 import org.codehaus.plexus.configuration.PlexusConfiguration;
 
 public interface ParameterizedConfigurationConverter
-    extends ConfigurationConverter
-{
-    Object fromConfiguration( ConverterLookup lookup, PlexusConfiguration configuration, Class<?> type,
-                              Type[] typeArguments, Class<?> enclosingType, ClassLoader loader,
-                              ExpressionEvaluator evaluator, ConfigurationListener listener )
-        throws ComponentConfigurationException;
+  extends ConfigurationConverter {
+
+    Object fromConfiguration(ConverterLookup lookup, PlexusConfiguration configuration, Class<?> type,
+      Type[] typeArguments, Class<?> enclosingType, ClassLoader loader,
+      ExpressionEvaluator evaluator, ConfigurationListener listener)
+      throws ComponentConfigurationException;
 }

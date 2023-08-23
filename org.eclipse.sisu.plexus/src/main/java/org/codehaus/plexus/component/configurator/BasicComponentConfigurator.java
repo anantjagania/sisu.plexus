@@ -10,6 +10,7 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component.configurator;
 
 import org.codehaus.plexus.classworlds.realm.ClassRealm;
@@ -19,23 +20,19 @@ import org.codehaus.plexus.component.configurator.expression.ExpressionEvaluator
 import org.codehaus.plexus.configuration.PlexusConfiguration;
 
 public class BasicComponentConfigurator
-    extends AbstractComponentConfigurator
-{
-    @Override
-    public void configureComponent( final Object component, final PlexusConfiguration configuration,
-                                    final ExpressionEvaluator evaluator, final ClassRealm realm,
-                                    final ConfigurationListener listener )
-        throws ComponentConfigurationException
-    {
-        try
-        {
-            ClassRealmConverter.pushContextRealm( realm );
+  extends AbstractComponentConfigurator {
 
-            new ObjectWithFieldsConverter().processConfiguration( converterLookup, component, realm, //
-                                                                  configuration, evaluator, listener );
-        }
-        finally
-        {
+    @Override
+    public void configureComponent(final Object component, final PlexusConfiguration configuration,
+      final ExpressionEvaluator evaluator, final ClassRealm realm,
+      final ConfigurationListener listener)
+      throws ComponentConfigurationException {
+        try {
+            ClassRealmConverter.pushContextRealm(realm);
+
+            new ObjectWithFieldsConverter().processConfiguration(converterLookup, component, realm, //
+              configuration, evaluator, listener);
+        } finally {
             ClassRealmConverter.popContextRealm();
         }
     }

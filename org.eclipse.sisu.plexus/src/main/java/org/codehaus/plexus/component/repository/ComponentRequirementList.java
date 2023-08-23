@@ -10,13 +10,13 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component.repository;
 
 import java.util.List;
 
 public final class ComponentRequirementList
-    extends ComponentRequirement
-{
+  extends ComponentRequirement {
     // ----------------------------------------------------------------------
     // Implementation fields
     // ----------------------------------------------------------------------
@@ -27,13 +27,11 @@ public final class ComponentRequirementList
     // Public methods
     // ----------------------------------------------------------------------
 
-    public void setRoleHints( final List<String> hints )
-    {
+    public void setRoleHints(final List<String> hints) {
         this.hints = hints;
     }
 
-    public List<String> getRoleHints()
-    {
+    public List<String> getRoleHints() {
         return hints;
     }
 }

@@ -8,11 +8,12 @@
  * Contributors:
  *   Stuart McCulloch (Sonatype, Inc.) - initial API and implementation
  *******************************************************************************/
+
 package org.eclipse.sisu.plexus;
 
 import org.codehaus.plexus.component.annotations.Component;
 
-@Component( role = int.class )
-public class BadBean
-{
+@Component(role = int.class)
+public class BadBean {
+
 }

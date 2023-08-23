@@ -8,11 +8,13 @@
  * Contributors:
  *   Stuart McCulloch (Sonatype, Inc.) - initial API and implementation
  *******************************************************************************/
+
 package org.eclipse.sisu.plexus;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+
 import java.util.Map;
 
 import org.codehaus.plexus.component.annotations.Configuration;
@@ -25,13 +27,12 @@ import org.eclipse.sisu.bean.BeanProperty;
  * Runtime {@link PlexusBeanMetadata} based on {@link BeanProperty} annotations.
  */
 public final class PlexusAnnotatedMetadata
-    implements PlexusBeanMetadata
-{
+  implements PlexusBeanMetadata {
     // ----------------------------------------------------------------------
     // Implementation fields
     // ----------------------------------------------------------------------
 
-    @SuppressWarnings( "rawtypes" )
+    @SuppressWarnings("rawtypes")
     private final Map variables;
 
     // ----------------------------------------------------------------------
@@ -40,11 +41,10 @@ public final class PlexusAnnotatedMetadata
 
     /**
      * Provides runtime Plexus metadata based on simple property annotations.
-     * 
+     *
      * @param variables The filter variables
      */
-    public PlexusAnnotatedMetadata( final Map<?, ?> variables )
-    {
+    public PlexusAnnotatedMetadata(final Map<?, ?> variables) {
         this.variables = variables;
     }
 
@@ -52,55 +52,43 @@ public final class PlexusAnnotatedMetadata
     // Public methods
     // ----------------------------------------------------------------------
 
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
         return false; // metadata comes from the properties themselves
     }
 
-    public Configuration getConfiguration( final BeanProperty<?> property )
-    {
-        final Configuration configuration = property.getAnnotation( Configuration.class );
-        if ( configuration != null && variables != null )
-        {
+    public Configuration getConfiguration(final BeanProperty<?> property) {
+        final Configuration configuration = property.getAnnotation(Configuration.class);
+        if (configuration != null && variables != null) {
             // support runtime interpolation of @Configuration values
             final String uninterpolatedValue = configuration.value();
-            final String value = interpolate( uninterpolatedValue );
-            if ( null != value && !value.equals( uninterpolatedValue ) )
-            {
-                return new ConfigurationImpl( configuration.name(), value );
+            final String value = interpolate(uninterpolatedValue);
+            if (null != value && !value.equals(uninterpolatedValue)) {
+                return new ConfigurationImpl(configuration.name(), value);
             }
         }
         return configuration;
     }
 
-    public Requirement getRequirement( final BeanProperty<?> property )
-    {
-        return property.getAnnotation( Requirement.class );
+    public Requirement getRequirement(final BeanProperty<?> property) {
+        return property.getAnnotation(Requirement.class);
     }
 
     // ----------------------------------------------------------------------
     // Implementation methods
     // ----------------------------------------------------------------------
 
-    private String interpolate( final String text )
-    {
-        if ( null == text || !text.contains( "${" ) )
-        {
+    private String interpolate(final String text) {
+        if (null == text || !text.contains("${")) {
             return text;
         }
         // use same interpolation method as XML for sake of consistency
-        final Reader r = new InterpolationFilterReader( new StringReader( text ), variables );
-        try
-        {
-            return IOUtil.toString( r );
-        }
-        catch ( final IOException e )
-        {
+        final Reader r = new InterpolationFilterReader(new StringReader(text), variables);
+        try {
+            return IOUtil.toString(r);
+        } catch (final IOException e) {
             return text; // should never actually happen, as no actual I/O involved
-        }
-        finally
-        {
-            IOUtil.close( r );
+        } finally {
+            IOUtil.close(r);
         }
     }
 }

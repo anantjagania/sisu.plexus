@@ -10,6 +10,7 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component.configurator.converters.composite;
 
 import org.codehaus.plexus.component.configurator.ComponentConfigurationException;
@@ -20,18 +21,16 @@ import org.codehaus.plexus.component.configurator.expression.ExpressionEvaluator
 import org.codehaus.plexus.configuration.PlexusConfiguration;
 
 public class PlexusConfigurationConverter
-    extends AbstractConfigurationConverter
-{
-    public boolean canConvert( final Class<?> type )
-    {
-        return PlexusConfiguration.class.isAssignableFrom( type );
+  extends AbstractConfigurationConverter {
+
+    public boolean canConvert(final Class<?> type) {
+        return PlexusConfiguration.class.isAssignableFrom(type);
     }
 
-    public Object fromConfiguration( final ConverterLookup lookup, final PlexusConfiguration configuration,
-                                     final Class<?> type, final Class<?> enclosingType, final ClassLoader loader,
-                                     final ExpressionEvaluator evaluator, final ConfigurationListener listener )
-        throws ComponentConfigurationException
-    {
+    public Object fromConfiguration(final ConverterLookup lookup, final PlexusConfiguration configuration,
+      final Class<?> type, final Class<?> enclosingType, final ClassLoader loader,
+      final ExpressionEvaluator evaluator, final ConfigurationListener listener)
+      throws ComponentConfigurationException {
         return configuration;
     }
 }

@@ -10,17 +10,18 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component.factory;
 
 import org.codehaus.plexus.PlexusContainer;
 import org.codehaus.plexus.classworlds.realm.ClassRealm;
 import org.codehaus.plexus.component.repository.ComponentDescriptor;
 
-public interface ComponentFactory
-{
+public interface ComponentFactory {
+
     String getId();
 
-    @SuppressWarnings( "rawtypes" )
-    Object newInstance( ComponentDescriptor cd, ClassRealm realm, PlexusContainer container )
-        throws ComponentInstantiationException;
+    @SuppressWarnings("rawtypes")
+    Object newInstance(ComponentDescriptor cd, ClassRealm realm, PlexusContainer container)
+      throws ComponentInstantiationException;
 }

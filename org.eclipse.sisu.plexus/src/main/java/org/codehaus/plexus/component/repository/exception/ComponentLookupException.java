@@ -10,18 +10,19 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component.repository.exception;
 
 public final class ComponentLookupException
-    extends Exception
-{
+  extends Exception {
+
     private static final long serialVersionUID = 1L;
 
     // ----------------------------------------------------------------------
     // Constants
     // ----------------------------------------------------------------------
 
-    private static final String LS = System.getProperty( "line.separator" );
+    private static final String LS = System.getProperty("line.separator");
 
     // ----------------------------------------------------------------------
     // Implementation fields
@@ -35,23 +36,20 @@ public final class ComponentLookupException
     // Public methods
     // ----------------------------------------------------------------------
 
-    public ComponentLookupException( final String message, final String role, final String hint )
-    {
-        super( message );
+    public ComponentLookupException(final String message, final String role, final String hint) {
+        super(message);
         this.role = role;
         this.hint = hint;
     }
 
-    public ComponentLookupException( final Throwable cause, final String role, final String hint )
-    {
-        super( cause );
+    public ComponentLookupException(final Throwable cause, final String role, final String hint) {
+        super(cause);
         this.role = role;
         this.hint = hint;
     }
 
     @Override
-    public String getMessage()
-    {
+    public String getMessage() {
         return super.getMessage() + LS + "      role: " + role + LS + "  roleHint: " + hint;
     }
 }

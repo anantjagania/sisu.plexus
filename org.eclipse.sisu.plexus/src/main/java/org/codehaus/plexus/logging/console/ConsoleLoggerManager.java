@@ -10,6 +10,7 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.logging.console;
 
 import org.codehaus.plexus.logging.AbstractLoggerManager;
@@ -17,8 +18,7 @@ import org.codehaus.plexus.logging.BaseLoggerManager;
 import org.codehaus.plexus.logging.Logger;
 
 public final class ConsoleLoggerManager
-    extends AbstractLoggerManager
-{
+  extends AbstractLoggerManager {
     // ----------------------------------------------------------------------
     // Implementation fields
     // ----------------------------------------------------------------------
@@ -29,38 +29,31 @@ public final class ConsoleLoggerManager
     // Public methods
     // ----------------------------------------------------------------------
 
-    public void setThreshold( final String threshold )
-    {
-        logger.setThreshold( BaseLoggerManager.parseThreshold( threshold ) );
+    public void setThreshold(final String threshold) {
+        logger.setThreshold(BaseLoggerManager.parseThreshold(threshold));
     }
 
-    public Logger getLoggerForComponent( final String role, final String hint )
-    {
+    public Logger getLoggerForComponent(final String role, final String hint) {
         return logger;
     }
 
-    public void returnComponentLogger( final String role, final String hint )
-    {
+    public void returnComponentLogger(final String role, final String hint) {
         // nothing to do
     }
 
-    public int getThreshold()
-    {
+    public int getThreshold() {
         return logger.getThreshold();
     }
 
-    public void setThreshold( final int currentThreshold )
-    {
-        logger.setThreshold( currentThreshold );
+    public void setThreshold(final int currentThreshold) {
+        logger.setThreshold(currentThreshold);
     }
 
-    public void setThresholds( final int currentThreshold )
-    {
-        logger.setThreshold( currentThreshold );
+    public void setThresholds(final int currentThreshold) {
+        logger.setThreshold(currentThreshold);
     }
 
-    public int getActiveLoggerCount()
-    {
+    public int getActiveLoggerCount() {
         return 0;
     }
 }

@@ -8,52 +8,52 @@
  * Contributors:
  *   Stuart McCulloch (Sonatype, Inc.) - initial API and implementation
  *******************************************************************************/
+
 package org.eclipse.sisu.plexus;
 
 import org.codehaus.plexus.classworlds.ClassWorld;
 import org.codehaus.plexus.classworlds.realm.ClassRealm;
 import org.codehaus.plexus.component.configurator.converters.special.ClassRealmConverter;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import junit.framework.TestCase;
+public class ClassRealmConverterTest {
 
-public class ClassRealmConverterTest
-    extends TestCase
-{
+    @Test
     public void testClassRealmStack()
-        throws Exception
-    {
+      throws Exception {
         final ClassWorld world = new ClassWorld();
 
-        final ClassRealm realmA = world.newRealm( "A" );
-        final ClassRealm realmB = world.newRealm( "B" );
-        final ClassRealm realmC = world.newRealm( "C" );
-        final ClassRealm realmD = world.newRealm( "D" );
+        final ClassRealm realmA = world.newRealm("A");
+        final ClassRealm realmB = world.newRealm("B");
+        final ClassRealm realmC = world.newRealm("C");
+        final ClassRealm realmD = world.newRealm("D");
 
-        final ClassRealmConverter converter = new ClassRealmConverter( realmA );
-        assertEquals( realmA, converter.peekContextRealm() );
-
-        ClassRealmConverter.popContextRealm();
-        assertEquals( realmA, converter.peekContextRealm() );
-
-        ClassRealmConverter.pushContextRealm( realmB );
-        assertEquals( realmB, converter.peekContextRealm() );
-
-        ClassRealmConverter.pushContextRealm( realmC );
-        assertEquals( realmC, converter.peekContextRealm() );
-
-        ClassRealmConverter.pushContextRealm( realmD );
-        assertEquals( realmD, converter.peekContextRealm() );
+        final ClassRealmConverter converter = new ClassRealmConverter(realmA);
+        Assertions.assertEquals(realmA, converter.peekContextRealm());
 
         ClassRealmConverter.popContextRealm();
-        assertEquals( realmC, converter.peekContextRealm() );
+        Assertions.assertEquals(realmA, converter.peekContextRealm());
+
+        ClassRealmConverter.pushContextRealm(realmB);
+        Assertions.assertEquals(realmB, converter.peekContextRealm());
+
+        ClassRealmConverter.pushContextRealm(realmC);
+        Assertions.assertEquals(realmC, converter.peekContextRealm());
+
+        ClassRealmConverter.pushContextRealm(realmD);
+        Assertions.assertEquals(realmD, converter.peekContextRealm());
 
         ClassRealmConverter.popContextRealm();
-        assertEquals( realmB, converter.peekContextRealm() );
+        Assertions.assertEquals(realmC, converter.peekContextRealm());
 
         ClassRealmConverter.popContextRealm();
-        assertEquals( realmA, converter.peekContextRealm() );
+        Assertions.assertEquals(realmB, converter.peekContextRealm());
 
         ClassRealmConverter.popContextRealm();
-        assertEquals( realmA, converter.peekContextRealm() );
+        Assertions.assertEquals(realmA, converter.peekContextRealm());
+
+        ClassRealmConverter.popContextRealm();
+        Assertions.assertEquals(realmA, converter.peekContextRealm());
     }
 }

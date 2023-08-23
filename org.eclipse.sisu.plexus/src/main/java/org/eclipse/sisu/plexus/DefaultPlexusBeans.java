@@ -8,20 +8,20 @@
  * Contributors:
  *   Stuart McCulloch (Sonatype, Inc.) - initial API and implementation
  *******************************************************************************/
+
 package org.eclipse.sisu.plexus;
+
+import com.google.inject.name.Named;
 
 import java.util.Iterator;
 
 import org.eclipse.sisu.BeanEntry;
 
-import com.google.inject.name.Named;
-
 /**
  * Sequence of {@link PlexusBean}s backed by {@link BeanEntry}s.
  */
 final class DefaultPlexusBeans<T>
-    implements Iterable<PlexusBean<T>>
-{
+  implements Iterable<PlexusBean<T>> {
     // ----------------------------------------------------------------------
     // Implementation fields
     // ----------------------------------------------------------------------
@@ -32,8 +32,7 @@ final class DefaultPlexusBeans<T>
     // Constructors
     // ----------------------------------------------------------------------
 
-    DefaultPlexusBeans( final Iterable<BeanEntry<Named, T>> beans )
-    {
+    DefaultPlexusBeans(final Iterable<BeanEntry<Named, T>> beans) {
         this.beans = beans;
     }
 
@@ -41,8 +40,7 @@ final class DefaultPlexusBeans<T>
     // Public methods
     // ----------------------------------------------------------------------
 
-    public Iterator<PlexusBean<T>> iterator()
-    {
+    public Iterator<PlexusBean<T>> iterator() {
         return new Itr();
     }
 
@@ -54,8 +52,7 @@ final class DefaultPlexusBeans<T>
      * {@link PlexusBean} iterator backed by {@link BeanEntry}s.
      */
     final class Itr
-        implements Iterator<PlexusBean<T>>
-    {
+      implements Iterator<PlexusBean<T>> {
         // ----------------------------------------------------------------------
         // Implementation fields
         // ----------------------------------------------------------------------
@@ -66,18 +63,15 @@ final class DefaultPlexusBeans<T>
         // Public methods
         // ----------------------------------------------------------------------
 
-        public boolean hasNext()
-        {
+        public boolean hasNext() {
             return itr.hasNext();
         }
 
-        public PlexusBean<T> next()
-        {
-            return new LazyPlexusBean<T>( itr.next() );
+        public PlexusBean<T> next() {
+            return new LazyPlexusBean<T>(itr.next());
         }
 
-        public void remove()
-        {
+        public void remove() {
             throw new UnsupportedOperationException();
         }
     }

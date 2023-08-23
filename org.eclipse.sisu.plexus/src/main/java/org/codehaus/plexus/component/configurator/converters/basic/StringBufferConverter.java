@@ -10,19 +10,18 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component.configurator.converters.basic;
 
 public class StringBufferConverter
-    extends AbstractBasicConverter
-{
-    public boolean canConvert( final Class<?> type )
-    {
-        return StringBuffer.class.equals( type );
+  extends AbstractBasicConverter {
+
+    public boolean canConvert(final Class<?> type) {
+        return StringBuffer.class.equals(type);
     }
 
     @Override
-    public Object fromString( final String value )
-    {
-        return new StringBuffer( value );
+    public Object fromString(final String value) {
+        return new StringBuffer(value);
     }
 }

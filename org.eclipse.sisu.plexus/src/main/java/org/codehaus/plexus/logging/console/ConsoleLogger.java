@@ -10,14 +10,14 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.logging.console;
 
 import org.codehaus.plexus.logging.AbstractLogger;
 import org.codehaus.plexus.logging.Logger;
 
 public final class ConsoleLogger
-    extends AbstractLogger
-{
+  extends AbstractLogger {
     // ----------------------------------------------------------------------
     // Constants
     // ----------------------------------------------------------------------
@@ -28,62 +28,49 @@ public final class ConsoleLogger
     // Constructors
     // ----------------------------------------------------------------------
 
-    public ConsoleLogger( final int threshold, final String name )
-    {
-        super( threshold, name );
+    public ConsoleLogger(final int threshold, final String name) {
+        super(threshold, name);
     }
 
-    public ConsoleLogger()
-    {
-        this( Logger.LEVEL_INFO, "console" );
+    public ConsoleLogger() {
+        this(Logger.LEVEL_INFO, "console");
     }
 
     // ----------------------------------------------------------------------
     // Public methods
     // ----------------------------------------------------------------------
 
-    public void debug( final String message, final Throwable throwable )
-    {
-        if ( isDebugEnabled() )
-        {
-            log( LEVEL_DEBUG, message, throwable );
+    public void debug(final String message, final Throwable throwable) {
+        if (isDebugEnabled()) {
+            log(LEVEL_DEBUG, message, throwable);
         }
     }
 
-    public void info( final String message, final Throwable throwable )
-    {
-        if ( isInfoEnabled() )
-        {
-            log( LEVEL_INFO, message, throwable );
+    public void info(final String message, final Throwable throwable) {
+        if (isInfoEnabled()) {
+            log(LEVEL_INFO, message, throwable);
         }
     }
 
-    public void warn( final String message, final Throwable throwable )
-    {
-        if ( isWarnEnabled() )
-        {
-            log( LEVEL_WARN, message, throwable );
+    public void warn(final String message, final Throwable throwable) {
+        if (isWarnEnabled()) {
+            log(LEVEL_WARN, message, throwable);
         }
     }
 
-    public void error( final String message, final Throwable throwable )
-    {
-        if ( isErrorEnabled() )
-        {
-            log( LEVEL_ERROR, message, throwable );
+    public void error(final String message, final Throwable throwable) {
+        if (isErrorEnabled()) {
+            log(LEVEL_ERROR, message, throwable);
         }
     }
 
-    public void fatalError( final String message, final Throwable throwable )
-    {
-        if ( isFatalErrorEnabled() )
-        {
-            log( LEVEL_FATAL, message, throwable );
+    public void fatalError(final String message, final Throwable throwable) {
+        if (isFatalErrorEnabled()) {
+            log(LEVEL_FATAL, message, throwable);
         }
     }
 
-    public Logger getChildLogger( final String name )
-    {
+    public Logger getChildLogger(final String name) {
         return this;
     }
 
@@ -91,12 +78,10 @@ public final class ConsoleLogger
     // Implementation methods
     // ----------------------------------------------------------------------
 
-    private static void log( final int level, final String message, final Throwable throwable )
-    {
-        System.out.println( TAGS[level].concat( message ) );
-        if ( throwable != null )
-        {
-            throwable.printStackTrace( System.out );
+    private static void log(final int level, final String message, final Throwable throwable) {
+        System.out.println(TAGS[level].concat(message));
+        if (throwable != null) {
+            throwable.printStackTrace(System.out);
         }
     }
 }

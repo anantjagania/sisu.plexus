@@ -8,90 +8,80 @@
  * Contributors:
  *   Stuart McCulloch (Sonatype, Inc.) - initial API and implementation
  *******************************************************************************/
+
 package org.eclipse.sisu.plexus;
 
-import javax.inject.Inject;
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+
+import jakarta.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.eclipse.sisu.bean.BeanManager;
 import org.eclipse.sisu.bean.BeanProperty;
 import org.eclipse.sisu.bean.PropertyBinding;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
+public class PlexusLoggingTest {
 
-import junit.framework.TestCase;
+    static class LoggerManager implements BeanManager {
 
-public class PlexusLoggingTest
-    extends TestCase
-{
-    static class LoggerManager
-        implements BeanManager
-    {
-        public boolean manage( final Class<?> clazz )
-        {
+        public boolean manage(final Class<?> clazz) {
             return false;
         }
 
-        @SuppressWarnings( "rawtypes" )
-        public PropertyBinding manage( final BeanProperty property )
-        {
-            if ( Logger.class.equals( property.getType().getRawType() ) )
-            {
-                return new PropertyBinding()
-                {
-                    @SuppressWarnings( "unchecked" )
-                    public <B> void injectProperty( final B bean )
-                    {
-                        property.set( bean, LoggerFactory.getLogger( bean.getClass() ) );
+        @SuppressWarnings("rawtypes")
+        public PropertyBinding manage(final BeanProperty property) {
+            if (Logger.class.equals(property.getType().getRawType())) {
+                return new PropertyBinding() {
+                    @SuppressWarnings("unchecked")
+                    public <B> void injectProperty(final B bean) {
+                        property.set(bean, LoggerFactory.getLogger(bean.getClass()));
                     }
                 };
             }
             return null;
         }
 
-        public boolean manage( final Object bean )
-        {
+        public boolean manage(final Object bean) {
             return false;
         }
 
-        public boolean unmanage( final Object bean )
-        {
+        public boolean unmanage(final Object bean) {
             return false;
         }
 
-        public boolean unmanage()
-        {
+        public boolean unmanage() {
             return false;
         }
     }
 
-    @Override
-    protected void setUp()
-    {
-        Guice.createInjector( new AbstractModule()
-        {
+    @BeforeAll
+    protected void setUp() {
+        Guice.createInjector(new AbstractModule() {
             @Override
-            protected void configure()
-            {
-                install( new PlexusDateTypeConverter() );
+            protected void configure() {
+                install(new PlexusDateTypeConverter());
 
-                bind( PlexusBeanLocator.class ).to( DefaultPlexusBeanLocator.class );
-                bind( PlexusBeanConverter.class ).to( PlexusXmlBeanConverter.class );
+                bind(PlexusBeanLocator.class).to(DefaultPlexusBeanLocator.class);
+                bind(PlexusBeanConverter.class).to(PlexusXmlBeanConverter.class);
 
-                install( new PlexusBindingModule( new LoggerManager(), new PlexusAnnotatedBeanModule( null, null ) ) );
+                install(new PlexusBindingModule(new LoggerManager(), new PlexusAnnotatedBeanModule(null, null)));
 
-                requestInjection( PlexusLoggingTest.this );
+                requestInjection(PlexusLoggingTest.this);
             }
-        } );
+        });
     }
 
-    @Component( role = Object.class )
-    static class SomeComponent
-    {
+    @Component(role = Object.class)
+    static class SomeComponent {
+
         @Requirement
         Logger logger;
     }
@@ -99,10 +89,10 @@ public class PlexusLoggingTest
     @Inject
     SomeComponent component;
 
-    public void testLogging()
-    {
-        assertNotNull( component.logger );
+    @Test
+    public void testLogging() {
+        Assertions.assertNotNull(component.logger);
 
-        assertEquals( SomeComponent.class.getName(), component.logger.getName() );
+        Assertions.assertEquals(SomeComponent.class.getName(), component.logger.getName());
     }
 }

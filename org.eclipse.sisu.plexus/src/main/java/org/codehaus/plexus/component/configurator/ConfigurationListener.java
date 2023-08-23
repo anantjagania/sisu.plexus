@@ -10,11 +10,12 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component.configurator;
 
-public interface ConfigurationListener
-{
-    void notifyFieldChangeUsingReflection( String name, Object value, Object component );
+public interface ConfigurationListener {
 
-    void notifyFieldChangeUsingSetter( String name, Object value, Object component );
+    void notifyFieldChangeUsingReflection(String name, Object value, Object component);
+
+    void notifyFieldChangeUsingSetter(String name, Object value, Object component);
 }

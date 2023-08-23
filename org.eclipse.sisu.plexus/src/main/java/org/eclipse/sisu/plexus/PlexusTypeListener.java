@@ -8,6 +8,7 @@
  * Contributors:
  *   Stuart McCulloch (Sonatype, Inc.) - initial API and implementation
  *******************************************************************************/
+
 package org.eclipse.sisu.plexus;
 
 import org.codehaus.plexus.component.annotations.Component;
@@ -18,14 +19,14 @@ import org.eclipse.sisu.space.QualifiedTypeListener;
  * {@link QualifiedTypeListener} that also listens for Plexus components.
  */
 public interface PlexusTypeListener
-    extends QualifiedTypeListener
-{
+  extends QualifiedTypeListener {
+
     /**
      * Invoked when the {@link PlexusTypeListener} finds a Plexus component.
-     * 
+     *
      * @param component The Plexus component
      * @param implementation The implementation
      * @param source The source of this component
      */
-    void hear( Component component, DeferredClass<?> implementation, Object source );
+    void hear(Component component, DeferredClass<?> implementation, Object source);
 }

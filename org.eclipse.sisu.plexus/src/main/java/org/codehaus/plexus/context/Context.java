@@ -10,18 +10,19 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.context;
 
 import java.util.Map;
 
-public interface Context
-{
-    boolean contains( Object key );
+public interface Context {
 
-    void put( Object key, Object value );
+    boolean contains(Object key);
 
-    Object get( Object key )
-        throws ContextException;
+    void put(Object key, Object value);
+
+    Object get(Object key)
+      throws ContextException;
 
     Map<Object, Object> getContextData();
 }

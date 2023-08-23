@@ -10,11 +10,11 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.logging;
 
 public abstract class AbstractLogEnabled
-    implements LogEnabled
-{
+  implements LogEnabled {
     // ----------------------------------------------------------------------
     // Implementation fields
     // ----------------------------------------------------------------------
@@ -25,8 +25,7 @@ public abstract class AbstractLogEnabled
     // Public methods
     // ----------------------------------------------------------------------
 
-    public void enableLogging( final Logger theLogger )
-    {
+    public void enableLogging(final Logger theLogger) {
         logger = theLogger;
     }
 
@@ -34,31 +33,25 @@ public abstract class AbstractLogEnabled
     // Shared methods
     // ----------------------------------------------------------------------
 
-    protected Logger getLogger()
-    {
+    protected Logger getLogger() {
         return logger;
     }
 
-    protected final void setupLogger( final Object component )
-    {
-        setupLogger( component, logger );
+    protected final void setupLogger(final Object component) {
+        setupLogger(component, logger);
     }
 
-    protected final void setupLogger( final Object component, final String category )
-    {
-        if ( category == null )
-        {
-            throw new IllegalStateException( "Logging category must be defined." );
+    protected final void setupLogger(final Object component, final String category) {
+        if (category == null) {
+            throw new IllegalStateException("Logging category must be defined.");
         }
-        setupLogger( component, logger.getChildLogger( category ) );
+        setupLogger(component, logger.getChildLogger(category));
     }
 
-    @SuppressWarnings( "static-method" )
-    protected final void setupLogger( final Object component, final Logger logger )
-    {
-        if ( component instanceof LogEnabled )
-        {
-            ( (LogEnabled) component ).enableLogging( logger );
+    @SuppressWarnings("static-method")
+    protected final void setupLogger(final Object component, final Logger logger) {
+        if (component instanceof LogEnabled) {
+            ((LogEnabled)component).enableLogging(logger);
         }
     }
 }

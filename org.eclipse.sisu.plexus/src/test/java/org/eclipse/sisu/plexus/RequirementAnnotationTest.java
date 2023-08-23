@@ -8,106 +8,101 @@
  * Contributors:
  *   Stuart McCulloch (Sonatype, Inc.) - initial API and implementation
  *******************************************************************************/
+
 package org.eclipse.sisu.plexus;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 import org.codehaus.plexus.component.annotations.Requirement;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import junit.framework.TestCase;
+public class RequirementAnnotationTest {
 
-public class RequirementAnnotationTest
-    extends TestCase
-{
     @Requirement
     String defaultReq;
 
-    @Requirement( role = String.class )
+    @Requirement(role = String.class)
     String stringReq;
 
-    @Requirement( hint = "named" )
+    @Requirement(hint = "named")
     String namedReq;
 
-    @Requirement( optional = true )
+    @Requirement(optional = true)
     String optionalReq;
 
-    @Requirement( hints = { "A", "B", "C" } )
+    @Requirement(hints = { "A", "B", "C" })
     List<?> namedListReq;
 
-    @Requirement( role = String.class, hint = "named" )
+    @Requirement(role = String.class, hint = "named")
     String namedStringReq;
 
-    @Requirement( role = String.class, hints = { "A", "B", "C" } )
+    @Requirement(role = String.class, hints = { "A", "B", "C" })
     List<String> namedStringListReq;
 
+    @Test
     public void testRequirementImpl()
-        throws NoSuchFieldException
-    {
-        checkBehaviour( "defaultReq" );
-        checkBehaviour( "stringReq" );
-        checkBehaviour( "namedReq" );
-        checkBehaviour( "optionalReq" );
-        checkBehaviour( "namedListReq" );
-        checkBehaviour( "namedStringReq" );
-        checkBehaviour( "namedStringListReq" );
+      throws NoSuchFieldException {
+        checkBehaviour("defaultReq");
+        checkBehaviour("stringReq");
+        checkBehaviour("namedReq");
+        checkBehaviour("optionalReq");
+        checkBehaviour("namedListReq");
+        checkBehaviour("namedStringReq");
+        checkBehaviour("namedStringListReq");
 
-        assertFalse( replicate( getRequirement( "defaultReq" ) ).equals( getRequirement( "stringReq" ) ) );
-        assertFalse( replicate( getRequirement( "stringReq" ) ).equals( getRequirement( "namedStringReq" ) ) );
-        assertFalse( replicate( getRequirement( "defaultReq" ) ).equals( getRequirement( "namedListReq" ) ) );
-        assertFalse( replicate( getRequirement( "defaultReq" ) ).equals( getRequirement( "optionalReq" ) ) );
+        Assertions.assertFalse(replicate(getRequirement("defaultReq")).equals(getRequirement("stringReq")));
+        Assertions.assertFalse(replicate(getRequirement("stringReq")).equals(getRequirement("namedStringReq")));
+        Assertions.assertFalse(replicate(getRequirement("defaultReq")).equals(getRequirement("namedListReq")));
+        Assertions.assertFalse(replicate(getRequirement("defaultReq")).equals(getRequirement("optionalReq")));
     }
 
-    private static void checkBehaviour( final String name )
-        throws NoSuchFieldException
-    {
-        final Requirement orig = getRequirement( name );
-        final Requirement clone = replicate( orig );
+    private static void checkBehaviour(final String name)
+      throws NoSuchFieldException {
+        final Requirement orig = getRequirement(name);
+        final Requirement clone = replicate(orig);
 
-        assertTrue( orig.equals( clone ) );
-        assertTrue( clone.equals( orig ) );
-        assertTrue( clone.equals( clone ) );
-        assertFalse( clone.equals( "" ) );
+        Assertions.assertTrue(orig.equals(clone));
+        Assertions.assertTrue(clone.equals(orig));
+        Assertions.assertTrue(clone.equals(clone));
+        Assertions.assertFalse(clone.equals(""));
 
-        assertEquals( orig.hashCode(), clone.hashCode() );
+        Assertions.assertEquals(orig.hashCode(), clone.hashCode());
 
-        String origToString = orig.toString().replace( "\"", "" ).replace( ".class", "" );
-        String cloneToString = clone.toString().replace( '[', '{' ).replace( ']', '}' );
-        cloneToString = cloneToString.replace( "class ", "" ).replace( "interface ", "" );
+        String origToString = orig.toString().replace("\"", "").replace(".class", "");
+        String cloneToString = clone.toString().replace('[', '{').replace(']', '}');
+        cloneToString = cloneToString.replace("class ", "").replace("interface ", "");
 
-        assertEquals( new HashSet<String>( Arrays.asList( origToString.split( "[(, )]" ) ) ),
-                      new HashSet<String>( Arrays.asList( cloneToString.split( "[(, )]" ) ) ) );
+        Assertions.assertEquals(new HashSet<String>(Arrays.asList(origToString.split("[(, )]"))),
+          new HashSet<String>(Arrays.asList(cloneToString.split("[(, )]"))));
 
-        assertEquals( orig.annotationType(), clone.annotationType() );
+        Assertions.assertEquals(orig.annotationType(), clone.annotationType());
 
-        try
-        {
-            final Field role = RequirementImpl.class.getDeclaredField( "role" );
-            final Method getName = role.getType().getMethod( "getName" );
-            role.setAccessible( true );
+        try {
+            final Field role = RequirementImpl.class.getDeclaredField("role");
+            final Method getName = role.getType().getMethod("getName");
+            role.setAccessible(true);
 
-            assertEquals( orig.role().getName(), getName.invoke( role.get( clone ) ) );
-        }
-        catch ( final Exception e )
-        {
-            fail( e.toString() );
+            Assertions.assertEquals(orig.role().getName(), getName.invoke(role.get(clone)));
+        } catch (final Exception e) {
+            Assertions.fail(e.toString());
         }
     }
 
-    private static Requirement getRequirement( final String name )
-        throws NoSuchFieldException
-    {
-        return RequirementAnnotationTest.class.getDeclaredField( name ).getAnnotation( Requirement.class );
+    private static Requirement getRequirement(final String name)
+      throws NoSuchFieldException {
+        return RequirementAnnotationTest.class.getDeclaredField(name).getAnnotation(Requirement.class);
     }
 
-    @SuppressWarnings( "deprecation" )
-    private static Requirement replicate( final Requirement orig )
-    {
+    @SuppressWarnings("deprecation")
+    private static Requirement replicate(final Requirement orig) {
         final String h = orig.hint();
 
-        return new RequirementImpl( orig.role(), orig.optional(), h.length() > 0 ? new String[] { h } : orig.hints() );
+        return new RequirementImpl(orig.role(), orig.optional(), h.length() > 0 ? new String[] { h } : orig.hints());
     }
 }

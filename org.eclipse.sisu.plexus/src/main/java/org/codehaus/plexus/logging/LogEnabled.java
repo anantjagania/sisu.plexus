@@ -10,9 +10,10 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.logging;
 
-public interface LogEnabled
-{
-    void enableLogging( Logger logger );
+public interface LogEnabled {
+
+    void enableLogging(Logger logger);
 }

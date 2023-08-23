@@ -10,6 +10,7 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component.configurator;
 
 import java.util.Map;
@@ -21,23 +22,19 @@ import org.codehaus.plexus.component.configurator.expression.ExpressionEvaluator
 import org.codehaus.plexus.configuration.PlexusConfiguration;
 
 public class MapOrientedComponentConfigurator
-    extends AbstractComponentConfigurator
-{
+  extends AbstractComponentConfigurator {
+
     @Override
-    public void configureComponent( final Object component, final PlexusConfiguration configuration,
-                                    final ExpressionEvaluator evaluator, final ClassRealm realm,
-                                    final ConfigurationListener listener )
-        throws ComponentConfigurationException
-    {
-        if ( component instanceof MapOrientedComponent )
-        {
-            Object map = new MapConverter().fromConfiguration( converterLookup, configuration, Map.class,
-                                                               component.getClass(), realm, evaluator, listener );
-            ( (MapOrientedComponent) component ).setComponentConfiguration( (Map<?, ?>) map );
-        }
-        else
-        {
-            throw new ComponentConfigurationException( "Component does not implement " + MapOrientedComponent.class );
+    public void configureComponent(final Object component, final PlexusConfiguration configuration,
+      final ExpressionEvaluator evaluator, final ClassRealm realm,
+      final ConfigurationListener listener)
+      throws ComponentConfigurationException {
+        if (component instanceof MapOrientedComponent) {
+            Object map = new MapConverter().fromConfiguration(converterLookup, configuration, Map.class,
+              component.getClass(), realm, evaluator, listener);
+            ((MapOrientedComponent)component).setComponentConfiguration((Map<?, ?>)map);
+        } else {
+            throw new ComponentConfigurationException("Component does not implement " + MapOrientedComponent.class);
         }
     }
 }

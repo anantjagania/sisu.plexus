@@ -10,36 +10,32 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component.configurator.converters.basic;
+
+import com.google.inject.spi.TypeConverter;
 
 import java.util.Date;
 
 import org.codehaus.plexus.component.configurator.ComponentConfigurationException;
 import org.eclipse.sisu.plexus.PlexusDateTypeConverter;
 
-import com.google.inject.spi.TypeConverter;
-
 public class DateConverter
-    extends AbstractBasicConverter
-{
+  extends AbstractBasicConverter {
+
     private static final TypeConverter DATE_CONVERTER = new PlexusDateTypeConverter();
 
-    public boolean canConvert( final Class<?> type )
-    {
-        return Date.class.equals( type );
+    public boolean canConvert(final Class<?> type) {
+        return Date.class.equals(type);
     }
 
     @Override
-    public Object fromString( final String value )
-        throws ComponentConfigurationException
-    {
-        try
-        {
-            return DATE_CONVERTER.convert( value, null /* unused */ );
-        }
-        catch ( final RuntimeException e )
-        {
-            throw new ComponentConfigurationException( "Cannot convert '" + value + "' to Date" );
+    public Object fromString(final String value)
+      throws ComponentConfigurationException {
+        try {
+            return DATE_CONVERTER.convert(value, null /* unused */);
+        } catch (final RuntimeException e) {
+            throw new ComponentConfigurationException("Cannot convert '" + value + "' to Date");
         }
     }
 }

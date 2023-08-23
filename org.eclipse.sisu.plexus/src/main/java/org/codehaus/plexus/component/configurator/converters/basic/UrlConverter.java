@@ -10,6 +10,7 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component.configurator.converters.basic;
 
 import java.net.MalformedURLException;
@@ -18,24 +19,19 @@ import java.net.URL;
 import org.codehaus.plexus.component.configurator.ComponentConfigurationException;
 
 public class UrlConverter
-    extends AbstractBasicConverter
-{
-    public boolean canConvert( final Class<?> type )
-    {
-        return URL.class.equals( type );
+  extends AbstractBasicConverter {
+
+    public boolean canConvert(final Class<?> type) {
+        return URL.class.equals(type);
     }
 
     @Override
-    public Object fromString( final String value )
-        throws ComponentConfigurationException
-    {
-        try
-        {
-            return new URL( value );
-        }
-        catch ( final MalformedURLException e )
-        {
-            throw new ComponentConfigurationException( "Cannot convert '" + value + "' to URL", e );
+    public Object fromString(final String value)
+      throws ComponentConfigurationException {
+        try {
+            return new URL(value);
+        } catch (final MalformedURLException e) {
+            throw new ComponentConfigurationException("Cannot convert '" + value + "' to URL", e);
         }
     }
 }

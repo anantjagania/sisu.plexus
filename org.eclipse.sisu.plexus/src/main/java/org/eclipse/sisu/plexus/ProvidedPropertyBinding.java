@@ -8,9 +8,10 @@
  * Contributors:
  *   Stuart McCulloch (Sonatype, Inc.) - initial API and implementation
  *******************************************************************************/
+
 package org.eclipse.sisu.plexus;
 
-import javax.inject.Provider;
+import jakarta.inject.Provider;
 
 import org.eclipse.sisu.bean.BeanProperty;
 import org.eclipse.sisu.bean.PropertyBinding;
@@ -19,8 +20,7 @@ import org.eclipse.sisu.bean.PropertyBinding;
  * Represents a {@link BeanProperty} bound to a {@link Provider}.
  */
 final class ProvidedPropertyBinding<T>
-    implements PropertyBinding
-{
+  implements PropertyBinding {
     // ----------------------------------------------------------------------
     // Implementation fields
     // ----------------------------------------------------------------------
@@ -33,8 +33,7 @@ final class ProvidedPropertyBinding<T>
     // Constructors
     // ----------------------------------------------------------------------
 
-    ProvidedPropertyBinding( final BeanProperty<T> property, final Provider<T> provider )
-    {
+    ProvidedPropertyBinding(final BeanProperty<T> property, final Provider<T> provider) {
         this.property = property;
         this.provider = provider;
     }
@@ -43,8 +42,7 @@ final class ProvidedPropertyBinding<T>
     // Public methods
     // ----------------------------------------------------------------------
 
-    public <B> void injectProperty( final B bean )
-    {
-        property.set( bean, provider.get() );
+    public <B> void injectProperty(final B bean) {
+        property.set(bean, provider.get());
     }
 }

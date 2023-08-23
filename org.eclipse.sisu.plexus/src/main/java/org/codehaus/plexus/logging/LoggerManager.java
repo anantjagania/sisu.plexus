@@ -10,25 +10,26 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.logging;
 
-public interface LoggerManager
-{
+public interface LoggerManager {
+
     String ROLE = LoggerManager.class.getName();
 
-    Logger getLoggerForComponent( String role );
+    Logger getLoggerForComponent(String role);
 
-    Logger getLoggerForComponent( String role, String hint );
+    Logger getLoggerForComponent(String role, String hint);
 
-    void returnComponentLogger( String role );
+    void returnComponentLogger(String role);
 
-    void returnComponentLogger( String role, String hint );
+    void returnComponentLogger(String role, String hint);
 
     int getThreshold();
 
-    void setThreshold( int threshold );
+    void setThreshold(int threshold);
 
-    void setThresholds( int threshold );
+    void setThresholds(int threshold);
 
     int getActiveLoggerCount();
 }

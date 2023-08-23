@@ -10,20 +10,19 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.personality.plexus.lifecycle.phase;
 
 public final class StoppingException
-    extends Exception
-{
+  extends Exception {
+
     private static final long serialVersionUID = 1L;
 
-    public StoppingException( final String message )
-    {
-        super( message );
+    public StoppingException(final String message) {
+        super(message);
     }
 
-    public StoppingException( final String message, final Throwable cause )
-    {
-        super( message, cause );
+    public StoppingException(final String message, final Throwable cause) {
+        super(message, cause);
     }
 }

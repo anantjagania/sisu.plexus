@@ -10,20 +10,19 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component.repository.exception;
 
 public final class ComponentRepositoryException
-    extends Exception
-{
+  extends Exception {
+
     private static final long serialVersionUID = 1L;
 
-    public ComponentRepositoryException( final String message )
-    {
-        super( message );
+    public ComponentRepositoryException(final String message) {
+        super(message);
     }
 
-    public ComponentRepositoryException( final String message, final Throwable detail )
-    {
-        super( message, detail );
+    public ComponentRepositoryException(final String message, final Throwable detail) {
+        super(message, detail);
     }
 }

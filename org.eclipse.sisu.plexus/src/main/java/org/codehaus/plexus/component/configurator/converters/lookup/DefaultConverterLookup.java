@@ -10,6 +10,7 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component.configurator.converters.lookup;
 
 import java.util.List;
@@ -45,81 +46,73 @@ import org.codehaus.plexus.component.configurator.converters.special.ClassRealmC
 import org.eclipse.sisu.inject.Weak;
 
 public final class DefaultConverterLookup
-    implements ConverterLookup
-{
+  implements ConverterLookup {
+
     private static final ConfigurationConverter[] DEFAULT_CONVERTERS = {
-        // optimized ordering...
-        new FileConverter(), //
-        new BooleanConverter(), //
-        new StringConverter(), //
-        new IntConverter(), //
-        new CollectionConverter(), //
-        new ArrayConverter(), //
-        new MapConverter(), //
-        new PropertiesConverter(), //
-        new UrlConverter(), //
-        new UriConverter(), //
-        new PathConverter(), //
-        new DateConverter(), //
-        new EnumConverter(), //
-        new LongConverter(), //
-        new FloatConverter(), //
-        new DoubleConverter(), //
-        new CharConverter(), //
-        new ByteConverter(), //
-        new ShortConverter(), //
-        // new ClassConverter(), // not installed by default
-        new PlexusConfigurationConverter(), //
-        new ClassRealmConverter(), //
-        new StringBufferConverter(), //
-        new StringBuilderConverter(), //
-        new ObjectWithFieldsConverter() };
+      // optimized ordering...
+      new FileConverter(), //
+      new BooleanConverter(), //
+      new StringConverter(), //
+      new IntConverter(), //
+      new CollectionConverter(), //
+      new ArrayConverter(), //
+      new MapConverter(), //
+      new PropertiesConverter(), //
+      new UrlConverter(), //
+      new UriConverter(), //
+      new PathConverter(), //
+      new DateConverter(), //
+      new EnumConverter(), //
+      new LongConverter(), //
+      new FloatConverter(), //
+      new DoubleConverter(), //
+      new CharConverter(), //
+      new ByteConverter(), //
+      new ShortConverter(), //
+      // new ClassConverter(), // not installed by default
+      new PlexusConfigurationConverter(), //
+      new ClassRealmConverter(), //
+      new StringBufferConverter(), //
+      new StringBuilderConverter(), //
+      new ObjectWithFieldsConverter() };
 
     private final Map<Class<?>, ConfigurationConverter> lookupCache = //
-        Weak.concurrentKeys(); // entries will expire on class unload
+      Weak.concurrentKeys(); // entries will expire on class unload
 
     private final List<ConfigurationConverter> customConverters = //
-        new CopyOnWriteArrayList<ConfigurationConverter>();
+      new CopyOnWriteArrayList<ConfigurationConverter>();
 
-    public void registerConverter( final ConfigurationConverter converter )
-    {
-        customConverters.add( converter );
+    public void registerConverter(final ConfigurationConverter converter) {
+        customConverters.add(converter);
     }
 
-    public ConfigurationConverter lookupConverterForType( final Class<?> type )
-        throws ComponentConfigurationException
-    {
-        ConfigurationConverter converter = lookupCache.get( type );
-        if ( null != converter )
-        {
+    public ConfigurationConverter lookupConverterForType(final Class<?> type)
+      throws ComponentConfigurationException {
+        ConfigurationConverter converter = lookupCache.get(type);
+        if (null != converter) {
             return converter;
         }
-        for ( int i = 0; i < customConverters.size(); i++ )
-        {
-            converter = customConverters.get( i );
-            if ( converter.canConvert( type ) )
-            {
-                lookupCache.put( type, converter );
+        for (int i = 0; i < customConverters.size(); i++) {
+            converter = customConverters.get(i);
+            if (converter.canConvert(type)) {
+                lookupCache.put(type, converter);
                 return converter;
             }
         }
-        for ( int i = 0; i < DEFAULT_CONVERTERS.length; i++ )
-        {
+        for (int i = 0; i < DEFAULT_CONVERTERS.length; i++) {
             converter = DEFAULT_CONVERTERS[i];
-            if ( converter.canConvert( type ) )
-            {
-                lookupCache.put( type, converter );
+            if (converter.canConvert(type)) {
+                lookupCache.put(type, converter);
                 return converter;
             }
         }
-        throw new ComponentConfigurationException( "Cannot find converter for type: " + type );
+        throw new ComponentConfigurationException("Cannot find converter for type: " + type);
     }
 
     /*
      * Referenced by some external XML configurations
      */
-    void setCustomConverters( final List<ConfigurationConverter> converters )
-    {
-        customConverters.addAll( converters );
+    void setCustomConverters(final List<ConfigurationConverter> converters) {
+        customConverters.addAll(converters);
     }
 }

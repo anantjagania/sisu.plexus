@@ -10,6 +10,7 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus;
 
 import org.codehaus.plexus.classworlds.ClassWorld;
@@ -17,11 +18,11 @@ import org.codehaus.plexus.logging.Logger;
 import org.codehaus.plexus.logging.LoggerManager;
 
 public interface MutablePlexusContainer
-    extends PlexusContainer
-{
+  extends PlexusContainer {
+
     LoggerManager getLoggerManager();
 
-    void setLoggerManager( LoggerManager loggerManager );
+    void setLoggerManager(LoggerManager loggerManager);
 
     Logger getLogger();
 

@@ -8,6 +8,7 @@
  * Contributors:
  *   Stuart McCulloch (Sonatype, Inc.) - initial API and implementation
  *******************************************************************************/
+
 package org.eclipse.sisu.plexus;
 
 import com.google.inject.TypeLiteral;
@@ -15,14 +16,14 @@ import com.google.inject.TypeLiteral;
 /**
  * Service that locates beans of various types, using optional Plexus hints as a guide.
  */
-public interface PlexusBeanLocator
-{
+public interface PlexusBeanLocator {
+
     /**
      * Locates beans of the given type, optionally filtered using the given named hints.
-     * 
+     *
      * @param role The expected bean type
      * @param hints The optional (canonical) hints
      * @return Sequence of Plexus bean mappings; ordered according to the given hints
      */
-    <T> Iterable<PlexusBean<T>> locate( TypeLiteral<T> role, String... hints );
+    <T> Iterable<PlexusBean<T>> locate(TypeLiteral<T> role, String... hints);
 }

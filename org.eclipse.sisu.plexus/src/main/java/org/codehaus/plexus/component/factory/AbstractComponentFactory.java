@@ -10,6 +10,7 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component.factory;
 
 import org.codehaus.classworlds.ClassRealmAdapter;
@@ -17,21 +18,19 @@ import org.codehaus.plexus.PlexusContainer;
 import org.codehaus.plexus.classworlds.realm.ClassRealm;
 import org.codehaus.plexus.component.repository.ComponentDescriptor;
 
-@SuppressWarnings( { "rawtypes", "deprecation" } )
+@SuppressWarnings({ "rawtypes", "deprecation" })
 public abstract class AbstractComponentFactory
-    implements ComponentFactory
-{
-    public Object newInstance( final ComponentDescriptor cd, final ClassRealm realm, final PlexusContainer container )
-        throws ComponentInstantiationException
-    {
-        return newInstance( cd, ClassRealmAdapter.getInstance( realm ), container );
+  implements ComponentFactory {
+
+    public Object newInstance(final ComponentDescriptor cd, final ClassRealm realm, final PlexusContainer container)
+      throws ComponentInstantiationException {
+        return newInstance(cd, ClassRealmAdapter.getInstance(realm), container);
     }
 
-    @SuppressWarnings( "unused" )
-    protected Object newInstance( final ComponentDescriptor cd, final org.codehaus.classworlds.ClassRealm realm,
-                                  final PlexusContainer container )
-        throws ComponentInstantiationException
-    {
-        throw new IllegalStateException( getClass() + " does not implement component creation" );
+    @SuppressWarnings("unused")
+    protected Object newInstance(final ComponentDescriptor cd, final org.codehaus.classworlds.ClassRealm realm,
+      final PlexusContainer container)
+      throws ComponentInstantiationException {
+        throw new IllegalStateException(getClass() + " does not implement component creation");
     }
 }

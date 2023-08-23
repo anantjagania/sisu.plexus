@@ -10,13 +10,14 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.personality.plexus.lifecycle.phase;
 
 import org.codehaus.plexus.configuration.PlexusConfiguration;
 import org.codehaus.plexus.configuration.PlexusConfigurationException;
 
-public interface Configurable
-{
-    void configure( PlexusConfiguration configuration )
-        throws PlexusConfigurationException;
+public interface Configurable {
+
+    void configure(PlexusConfiguration configuration)
+      throws PlexusConfigurationException;
 }

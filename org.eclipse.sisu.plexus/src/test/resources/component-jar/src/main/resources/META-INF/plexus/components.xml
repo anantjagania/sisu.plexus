@@ -10,13 +10,13 @@
  ~    Takari, Inc. - initial API and implementation
 -->
 <component-set>
-  <components>
-    <component>
-      <role>org.eclipse.sisu.plexus.tests.SomeComponent</role>
-      <role-hint>default</role-hint>
-      <implementation>org.eclipse.sisu.plexus.tests.SomeComponent</implementation>
-      <description />
-      <isolated-realm>false</isolated-realm>
-    </component>
-  </components>
+    <components>
+        <component>
+            <role>org.eclipse.sisu.plexus.tests.SomeComponent</role>
+            <role-hint>default</role-hint>
+            <implementation>org.eclipse.sisu.plexus.tests.SomeComponent</implementation>
+            <description/>
+            <isolated-realm>false</isolated-realm>
+        </component>
+    </components>
 </component-set>

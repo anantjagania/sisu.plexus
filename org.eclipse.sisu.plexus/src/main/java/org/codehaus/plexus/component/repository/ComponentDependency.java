@@ -10,10 +10,10 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component.repository;
 
-public final class ComponentDependency
-{
+public final class ComponentDependency {
     // ----------------------------------------------------------------------
     // Implementation fields
     // ----------------------------------------------------------------------
@@ -30,49 +30,40 @@ public final class ComponentDependency
     // Public methods
     // ----------------------------------------------------------------------
 
-    public void setGroupId( final String groupId )
-    {
+    public void setGroupId(final String groupId) {
         this.groupId = groupId;
     }
 
-    public void setArtifactId( final String artifactId )
-    {
+    public void setArtifactId(final String artifactId) {
         this.artifactId = artifactId;
     }
 
-    public void setVersion( final String version )
-    {
+    public void setVersion(final String version) {
         this.version = version;
     }
 
-    public void setType( final String type )
-    {
+    public void setType(final String type) {
         this.type = type;
     }
 
-    public String getGroupId()
-    {
+    public String getGroupId() {
         return groupId;
     }
 
-    public String getArtifactId()
-    {
+    public String getArtifactId() {
         return artifactId;
     }
 
-    public String getVersion()
-    {
+    public String getVersion() {
         return version;
     }
 
-    public String getType()
-    {
+    public String getType() {
         return type;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "groupId = " + groupId + ", artifactId = " + artifactId + ", version = " + version + ", type = " + type;
     }
 }

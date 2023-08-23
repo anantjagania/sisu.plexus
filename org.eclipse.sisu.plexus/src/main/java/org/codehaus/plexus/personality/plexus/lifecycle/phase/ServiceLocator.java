@@ -10,6 +10,7 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.personality.plexus.lifecycle.phase;
 
 import java.util.List;
@@ -18,30 +19,30 @@ import java.util.Map;
 import org.codehaus.plexus.component.repository.exception.ComponentLifecycleException;
 import org.codehaus.plexus.component.repository.exception.ComponentLookupException;
 
-public interface ServiceLocator
-{
-    Object lookup( String role )
-        throws ComponentLookupException;
+public interface ServiceLocator {
 
-    Object lookup( String role, String hint )
-        throws ComponentLookupException;
+    Object lookup(String role)
+      throws ComponentLookupException;
 
-    Map<String, Object> lookupMap( String role )
-        throws ComponentLookupException;
+    Object lookup(String role, String hint)
+      throws ComponentLookupException;
 
-    List<Object> lookupList( String role )
-        throws ComponentLookupException;
+    Map<String, Object> lookupMap(String role)
+      throws ComponentLookupException;
 
-    void release( Object component )
-        throws ComponentLifecycleException;
+    List<Object> lookupList(String role)
+      throws ComponentLookupException;
 
-    void releaseAll( Map<String, ?> components )
-        throws ComponentLifecycleException;
+    void release(Object component)
+      throws ComponentLifecycleException;
 
-    void releaseAll( List<?> components )
-        throws ComponentLifecycleException;
+    void releaseAll(Map<String, ?> components)
+      throws ComponentLifecycleException;
 
-    boolean hasComponent( String role );
+    void releaseAll(List<?> components)
+      throws ComponentLifecycleException;
 
-    boolean hasComponent( String role, String hint );
+    boolean hasComponent(String role);
+
+    boolean hasComponent(String role, String hint);
 }

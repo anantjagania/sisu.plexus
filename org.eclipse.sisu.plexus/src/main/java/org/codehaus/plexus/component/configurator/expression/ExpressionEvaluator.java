@@ -10,14 +10,15 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component.configurator.expression;
 
 import java.io.File;
 
-public interface ExpressionEvaluator
-{
-    Object evaluate( String expression )
-        throws ExpressionEvaluationException;
+public interface ExpressionEvaluator {
 
-    File alignToBaseDirectory( File path );
+    Object evaluate(String expression)
+      throws ExpressionEvaluationException;
+
+    File alignToBaseDirectory(File path);
 }

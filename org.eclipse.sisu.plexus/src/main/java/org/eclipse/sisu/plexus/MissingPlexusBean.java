@@ -8,19 +8,19 @@
  * Contributors:
  *   Stuart McCulloch (Sonatype, Inc.) - initial API and implementation
  *******************************************************************************/
-package org.eclipse.sisu.plexus;
 
-import java.util.Map.Entry;
+package org.eclipse.sisu.plexus;
 
 import com.google.inject.TypeLiteral;
 import com.google.inject.name.Named;
+
+import java.util.Map.Entry;
 
 /**
  * {@link Entry} representing a missing @{@link Named} Plexus bean.
  */
 final class MissingPlexusBean<T>
-    implements PlexusBean<T>
-{
+  implements PlexusBean<T> {
     // ----------------------------------------------------------------------
     // Implementation fields
     // ----------------------------------------------------------------------
@@ -33,8 +33,7 @@ final class MissingPlexusBean<T>
     // Constructors
     // ----------------------------------------------------------------------
 
-    MissingPlexusBean( final TypeLiteral<T> role, final String hint )
-    {
+    MissingPlexusBean(final TypeLiteral<T> role, final String hint) {
         this.role = role;
         this.hint = hint;
     }
@@ -43,34 +42,28 @@ final class MissingPlexusBean<T>
     // Public methods
     // ----------------------------------------------------------------------
 
-    public String getKey()
-    {
+    public String getKey() {
         return hint;
     }
 
-    public T getValue()
-    {
-        return Roles.throwMissingComponentException( role, hint );
+    public T getValue() {
+        return Roles.throwMissingComponentException(role, hint);
     }
 
-    public T setValue( final T value )
-    {
+    public T setValue(final T value) {
         throw new UnsupportedOperationException();
     }
 
-    public String getDescription()
-    {
+    public String getDescription() {
         return null;
     }
 
-    public Class<T> getImplementationClass()
-    {
+    public Class<T> getImplementationClass() {
         return null;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return getKey() + "=<missing>";
     }
 }

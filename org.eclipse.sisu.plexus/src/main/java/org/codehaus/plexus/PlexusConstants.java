@@ -10,12 +10,13 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus;
 
 import org.eclipse.sisu.plexus.Hints;
 
-public interface PlexusConstants
-{
+public interface PlexusConstants {
+
     String PLEXUS_DEFAULT_HINT = Hints.DEFAULT_HINT;
 
     String PLEXUS_KEY = "plexus";

@@ -1,10 +1,12 @@
 Contributor License
 -------------------
 
-If this is your first time contributing to an Eclipse Foundation project, you'll need to sign the [Eclipse Contributor Agreement][ECA].
+If this is your first time contributing to an Eclipse Foundation project, you'll need to sign
+the [Eclipse Contributor Agreement][ECA].
 
 - [Create an account](https://dev.eclipse.org/site_login/createaccount.php) on dev.eclipse.org
-- Open your [Account Settings tab](https://dev.eclipse.org/site_login/myaccount.php#open_tab_accountsettings), enter your GitHub ID and click Update Account
+- Open your [Account Settings tab](https://dev.eclipse.org/site_login/myaccount.php#open_tab_accountsettings), enter your GitHub ID
+  and click Update Account
 - Read and [sign the ECA](https://dev.eclipse.org/site_login/myaccount.php#open_tab_cla)
 - Your git commits must be [signed off](https://wiki.eclipse.org/Development_Resources/Contributing_via_Git#Signing_off_on_a_commit)
 - Use the exact same email address for your Eclipse account, your commit author, and your commit sign-off.
@@ -34,7 +36,8 @@ Coding Style
 
 Sisu follows the same [code style and code conventions][style-guide] as Maven.
 
-Avoid changing whitespace on lines that are unrelated to your pull request. This helps preserve the accuracy of the git blame view, and makes code reviews easier.
+Avoid changing whitespace on lines that are unrelated to your pull request. This helps preserve the accuracy of the git blame view,
+and makes code reviews easier.
 
 You can use the spotless maven plugin to automatically format code to the accepted code style
 
@@ -67,8 +70,13 @@ One of the committers will take a look and provide feedback or merge your contri
 That's it, thanks for contributing to Sisu!
 
 [ECA]:             https://www.eclipse.org/legal/ECA.php
+
 [issue-tracker]:   https://github.com/eclipse/sisu.plexus/issues
+
 [style-guide]:     https://maven.apache.org/developers/conventions/code.html
+
 [rebase]:          https://github.com/edx/edx-platform/wiki/How-to-Rebase-a-Pull-Request
+
 [github-issue]:    https://help.github.com/articles/closing-issues-via-commit-messages/
+
 [mailing-list]:    https://dev.eclipse.org/mailman/listinfo/sisu-dev

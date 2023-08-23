@@ -10,6 +10,7 @@
  *
  * Minimal facade required to be binary-compatible with legacy Plexus API
  *******************************************************************************/
+
 package org.codehaus.plexus.component;
 
 import java.util.Map;
@@ -17,11 +18,11 @@ import java.util.Map;
 import org.codehaus.plexus.component.configurator.ComponentConfigurationException;
 import org.codehaus.plexus.component.repository.ComponentRequirement;
 
-public interface MapOrientedComponent
-{
-    void addComponentRequirement( ComponentRequirement requirement, Object value )
-        throws ComponentConfigurationException;
+public interface MapOrientedComponent {
 
-    void setComponentConfiguration( Map<?, ?> configuration )
-        throws ComponentConfigurationException;
+    void addComponentRequirement(ComponentRequirement requirement, Object value)
+      throws ComponentConfigurationException;
+
+    void setComponentConfiguration(Map<?, ?> configuration)
+      throws ComponentConfigurationException;
 }
